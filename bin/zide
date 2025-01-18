@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Configurable constants
+# 
+# Location of the zide project files
+export ZIDE_DIR="$HOME/.config/zide"
+# Default layout. Available layouts can be found in the zide layouts/ directory
+ZIDE_DEFAULT_LAYOUT="ide_compact"
+
+# Optional params
+# 
+# Working directory to open in, defaults to pwd
+cwd=${1:-$(pwd)} 
+# Layout to use
+layout=${2:-$ZIDE_DEFAULT_LAYOUT} 
+
+layout_path="$ZIDE_DIR/layouts/$layout"
+if [ -n "$ZELLIJ" ]; then
+  zellij action new-tab --cwd $cwd --layout "$layout_path"
+else
+  # No way to specify the working dir to the zellij CLI, so we change the working dir before opening
+  # zellij, and change it back once we exit
+  pushd $cwd > /dev/null
+    zellij --layout "$layout_path"
+  popd > /dev/null
+fi
