@@ -38,6 +38,8 @@ The non-compact layout is similar to the compact one, but with a 3rd, 100-column
 
 ## Configuration
 
+You can configure the existing layouts (or create new ones) by editing the `.kdl` files in the `layouts/` directory. Here you can tweak things such as how wide you want `yazi` to be vs the editor, and any other layout tweaks you want to make. The one absolute requirement is that **your editor pane must be next to the `yazi` pane**. There's no way to uniquely identify the different panes in `zellij`, therefore these scripts depend on calling `zellij action focus-next-pane` to focus your editor from `yazi`. If you want to lay your panes out in a different way, you can update focus command in the `yazide` script to make sure you focus the right pane.
+
 Both the `zide` and `yazide` commands are somewhat configurable:
 
 ### `zide`
