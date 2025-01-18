@@ -21,7 +21,7 @@ This project cobbles together [`zellij`](https://zellij.dev) and [`yazi`](https:
 
 ## Usage
 
-Running the `zide` command will do one of two things:
+Run the `zide` command to start using Zellij as an IDE. The command will do one of two things:
 1. If you're not currently in a `zellij` session, it'll start one
 2. If you're in an existing `zellij` session, it'll create a new tab
 
