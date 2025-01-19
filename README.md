@@ -4,16 +4,16 @@
 
 Zide is a group of configuration files and scripts that creates an IDE-like experience in `zellij` (think VS Code). It mainly consists of a file picker (using `yazi`) in one pane, and your editor of choice in the main pane. The project is heavily inspired by the [`yazelix`](https://github.com/luccahuguet/yazelix) project, but simplifies it down to work in most shells (instead of requiring `nushell`) and more editors (vs just Helix).
 
-## Why?
-
-I recently started using [Helix](https://helix-editor.com) as my editor of choice. I loved most everything about it, except that there was no tree-style file browser to open files. While the fuzzy finder is fantastic for quickly getting to files I know about, I often work in large monorepos where I don't know the directory or file naming structure in advance, and a visual filepicker is extremely useful. On top of that, [`yazi`](https://yazi-rs.github.io) is an incredibly powerful and useful tool for file management, and integrating it seemlessly with Helix was high on my list of priorities.
-
 ## Features
 
 1. Start a `zellij` layout with `yazi` on the left and your `$EDITOR` on the right
 2. Browse for files in `yazi`, and open any selected files or directories in your `$EDITOR` pane
 3. Open multiple files at once
 4. When opening a directory in `yazi`, set that directory as the working directory in your `$EDITOR` automatically 
+
+## Why?
+
+I recently started using [Helix](https://helix-editor.com) as my editor of choice. I loved most everything about it, except that there was no tree-style file browser to open files. While the fuzzy finder is fantastic for quickly getting to files I know about, I often work in large monorepos where I don't know the directory or file naming structure in advance, and a visual filepicker is extremely useful. On top of that, [`yazi`](https://yazi-rs.github.io) is an incredibly powerful and useful tool for file management, and integrating it seemlessly with Helix was high on my list of priorities.
 
 ## Installation
 
