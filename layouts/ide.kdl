@@ -11,7 +11,7 @@ layout {
         pane split_direction="vertical" {
             pane size=40 name="yazi" {
               name "yazi"
-              command "yazide"
+              command "zide-yazi"
               args "open"
             }
             pane name="editor" {
@@ -39,7 +39,7 @@ layout {
             pane split_direction="horizontal" {
                 pane size=20 name="yazi" {
                   name "yazi"
-                  command "yazide"
+                  command "zide-yazi"
                   args "open"
                 }
                 pane split_direction="vertical" {
