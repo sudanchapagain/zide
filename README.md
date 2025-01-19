@@ -40,13 +40,12 @@ The non-compact layout is similar to the compact one, but with a 3rd, 100-column
 
 You can configure the existing layouts (or create new ones) by editing the `.kdl` files in the `layouts/` directory. Here you can tweak things such as how wide you want `yazi` to be vs the editor, and any other layout tweaks you want to make. The one absolute requirement is that **your editor pane must be next to the `yazi` pane**. There's no way to uniquely identify the different panes in `zellij`, therefore these scripts depend on calling `zellij action focus-next-pane` to focus your editor from `yazi`. If you want to lay your panes out in a different way, you can update focus command in the `yazide` script to make sure you focus the right pane.
 
-Both the `zide` and `yazide` commands are somewhat configurable:
+Both the `zide` and `yazide` commands are somewhat configurable via some constants declared at the top of the scripts:
 
 ### `zide`
 The main `zide` command controls opening new `zide` tabs, either in an existing session if inside one or starting a new one.
 
-1. `ZIDE_DIR`: Controls the location of the zide project files (ie. where you installed zide to)
-2. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide layouts/ directory
+1. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide layouts/ directory
 
 ### `yazide`
 The `yazide` command is a wrapper around `yazi` which does most of the magic of communicating with your editor to open files and directories through `zellij` pane commands. Unless you're making custom layouts, you'll probably never need to run this yourself, but it is somewhat configurable.

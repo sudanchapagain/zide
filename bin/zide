@@ -5,6 +5,60 @@
 # Default layout. Available layouts can be found in the zide layouts/ directory
 ZIDE_DEFAULT_LAYOUT="ide_compact"
 
+read -r -d '' HELP_TEXT << EOF
+Usage: $(basename "$0") [OPTIONS] <working_dir> <layout>
+
+Optional positional Parameters:
+  <working_dir>     Working directory to open in, defaults to pwd
+  <layout>          Layout to use from this project's layouts/ directory
+
+Options:
+  -h, --help        Show this help message and exit.
+
+Description:
+  Start using Zellij as an IDE. The command will do one of two things:
+    1. If you're not currently in a zellij session, it'll start one
+    2. If you're in an existing zellij session, it'll create a new tab
+
+  By default, starting zide will use the compact layout, consisting of a
+  vertical split of panes with yazi on the left occupying a small slice of it,
+  and your \$EDITOR on the right occupying the rest, with your current
+  working directory set as the directory in both your \$EDITOR and yazi.
+
+  Passing in a working directory will ensure that yazi, your editor, and any
+  future panes are all working in the same directory. By default, it'll use the
+  current working directory from which you're calling the command.
+
+  The non-compact layout is similar to the compact one, but with a 3rd,
+  100-column wide pane to the right. The two layouts also differ slightly in how
+  the swap layouts work. Any additional layouts you add or configure in the zide
+  layouts/ directory will be available to use from the zide command.
+EOF
+
+# Function to display the help text
+show_help() {
+  echo "$HELP_TEXT"
+}
+
+# Parse command-line options
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help)
+      show_help
+      exit 0
+      ;;
+    -*)
+      echo "Unknown option: $1"
+      echo "Use --help or -h for usage information."
+      exit 1
+      ;;
+    *)
+      # Stop processing options when a positional parameter is encountered
+      break
+      ;;
+  esac
+done
+
 # Optional params
 # 
 # Working directory to open in, defaults to pwd
