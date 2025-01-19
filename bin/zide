@@ -2,8 +2,6 @@
 
 # Configurable constants
 # 
-# Location of the zide project files
-export ZIDE_DIR="$HOME/.config/zide"
 # Default layout. Available layouts can be found in the zide layouts/ directory
 ZIDE_DEFAULT_LAYOUT="ide_compact"
 
@@ -13,6 +11,16 @@ ZIDE_DEFAULT_LAYOUT="ide_compact"
 cwd=${1:-$(pwd)} 
 # Layout to use
 layout=${2:-$ZIDE_DEFAULT_LAYOUT} 
+
+# Figure out where zide is installed based on where the script lives
+if command -v readlink >/dev/null 2>&1; then
+  script_dir=$(dirname "$(readlink -f "$0")")
+else
+  script_dir=$(cd -- "$(dirname -- "$0")" && pwd)
+fi
+
+# Export location of the zide project files for further use
+export ZIDE_DIR=$(dirname "$script_dir")
 
 layout_path="$ZIDE_DIR/layouts/$layout"
 if [ -n "$ZELLIJ" ]; then
