@@ -4,7 +4,7 @@ read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <command>
 
 Optional Parameters:
-  <command>         Command used to open files in \$EDITOR
+  <command>         Command used to open files in \`$EDITOR\`
 	<config>          Yazi picker config location  
 	<working_dir>     Optionally specify a working directory to open yazi intoOptions:
 
@@ -12,8 +12,8 @@ Options:
   -h, --help        Show this help message and exit.
 
 Description:
-  Wrapper around yazi that handles sending picked files to the \$EDITOR pane and
-  then re-opening yazi. If a directory was the picked path, yazi will re-open in
+  Wrapper around Yazi that handles sending picked files to \`$EDITOR\` pane and
+  then re-opening Yazi. If a directory was the picked path, Yazi will re-open in
   that directory as its new working dir.
 EOF
 

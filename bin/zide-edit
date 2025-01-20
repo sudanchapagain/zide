@@ -1,25 +1,23 @@
 #!/usr/bin/env bash
 
-# Configurable constants
-#
-# Character to open command mode in editor
-EDITOR_COMMAND_PREFIX=":"
-# Editor command to change the editor's current working directory
-EDITOR_CD_COMMAND="cd"
-
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <command>
 
 Required Parameters:
-  <command>         Command used to open files in your \$EDITOR
-                    (open/hsplit/vsplit in helix, edit/split/vsplit in nvim).
+  <command>              Command used to open files in \`$EDITOR\`.
+                         (open/hsplit/vsplit in Helix, edit/split/vsplit NeoVim)
 
 Options:
-  -h, --help        Show this help message and exit.
+  -h, --help             Show this help message and exit.
+
+Environment Variables:
+  ZIDE_EDITOR_CMD_MODE   Character that opens command mode in \`$EDITOR\`.
+  ZIDE_EDITOR_CD_CMD     Editor command to change \`$EDITOR\` current working
+                         directory.
 
 Description:
-  Handles reading in a list of paths from stdin and uses zellij's action
-  commands to switch to the \$EDITOR's pane and runs the open commands in it.
+  Handles reading in a list of paths from stdin and uses Zellij's action
+  commands to switch to \`$EDITOR\`'s pane and runs the open commands in it.
 EOF
 
 # Function to display the help text
@@ -54,6 +52,9 @@ command=${1}
 read paths
 path=${paths[0]}
 
+cmdModePrefix=${ZIDE_EDITOR_CMD_MODE:-":"}
+cdCommand=${ZIDE_EDITOR_CD_CMD:-"cd"}
+
 # Focus editor pane, must be the next pane after yazi
 zellij action focus-next-pane
 
@@ -62,7 +63,7 @@ zellij action focus-next-pane
 # cwd set.
 if [ ! -f "${path}" ] && [ ${#paths[@]} -eq 1 ]; then
 	zellij action write 27 # send <Escape> key to enter NORMAL mode
-	zellij action write-chars "${EDITOR_COMMAND_PREFIX}${EDITOR_CD_COMMAND} ${path}"
+	zellij action write-chars "${cmdModePrefix}${cdCommand} ${path}"
 	zellij action write 13 # send <Enter> key
 	sleep 0.25
 fi
@@ -70,6 +71,6 @@ fi
 # Open paths in the editor
 if [[ -n "${paths}" ]]; then
 	zellij action write 27 # send <Escape> key to enter NORMAL mode
-	zellij action write-chars "${EDITOR_COMMAND_PREFIX}${command} ${paths}"
+	zellij action write-chars "${cmdModePrefix}${command} ${paths}"
 	zellij action write 13 # send <Enter> key
 fi

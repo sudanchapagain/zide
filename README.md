@@ -46,6 +46,30 @@ Passing in a working directory will ensure that `yazi`, your editor, and any fut
 
 The non-compact layout is similar to the compact one, but with a 3rd, 100-column wide pane to the right. The two layouts also differ slightly in how the swap layouts work. Any additional layouts you add or configure in the zide `layouts/` directory will be available to use from the `zide`.
 
+## Configuration
+
+You can configure the existing layouts (or create new ones) by editing the `.kdl` files in the `layouts/` directory. Here you can tweak things such as how wide you want `yazi` to be vs the editor, and any other layout tweaks you want to make. The one absolute requirement is that **your editor pane must be next to the `yazi` pane**. There's no way to uniquely identify the different panes in `zellij`, therefore these scripts depend on calling `zellij action focus-next-pane` to focus your editor from `yazi`. If you want to lay your panes out in a different way, you can update focus command in the `zide-yazi` script to make sure you focus the right pane.
+
+Both the `zide` and `zide-yazi` commands are somewhat configurable via some environment variables which you can override in your shell or session:
+
+### `zide`
+The main `zide` command controls opening new `zide` tabs, either in an existing session if inside one or starting a new one.
+
+1. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide `layouts/` directory
+
+### `zide-edit`
+The `zide-edit` command is responsible for sending the correct Zellij commands to the `$EDITOR` pane to open them. This command is used by the file picker wrapper scripts, and you'll probably never need to run it yourself.
+
+The defaults will all work out of the box when using Helix as your editor, as that's my editor of choice, and Helix's lack of an IDE-like layout is the whole reason for this project. They should also work with other modal editors such as Vim and NeoVim. If you need to make changes, you can update the following environment variables:
+
+1. `ZIDE_EDITOR_CMD_MODE`: Character to open command mode in editor. In editors such as Helix and NeoVim, this is the `:`.
+2. `ZIDE_EDITOR_CD_CMD`: Editor command to change the editor's current working directory. In Helix and NeoVim, this is `cd`.
+
+### `zide-yazi`
+The `zide-yazi` command is a wrapper around `yazi` which does most of the magic of communicating with your editor to open files and directories through `zellij` pane commands. Unless you're making custom layouts, you'll probably never need to run this yourself.
+
+Additionally, there's a custom `yazi/yazi.toml` file included which will allow you to customize `yazi` when using `zide`. I mainly use this to force `yazi` into a single column mode, but any other yazi config options you need that only apply when using `zide `can go here (including `keymap` and `theme` configs).
+
 ## How it works
 
 This project consists of 3 parts:
@@ -62,26 +86,3 @@ Once we have our files, the `zide-yazi` script then switches the focused pane us
 4. `zellij action write 13`: Send the `<ENTER>` key to submit the commands.
 
 Lastly, `yazi` closes itself once you choose files, so `zide-yazi` will re-run itself so that `yazi` re-opens. If you chose a `directory`, it'll also re-open itself to that directory as its working dir.
-
-## Configuration
-
-You can configure the existing layouts (or create new ones) by editing the `.kdl` files in the `layouts/` directory. Here you can tweak things such as how wide you want `yazi` to be vs the editor, and any other layout tweaks you want to make. The one absolute requirement is that **your editor pane must be next to the `yazi` pane**. There's no way to uniquely identify the different panes in `zellij`, therefore these scripts depend on calling `zellij action focus-next-pane` to focus your editor from `yazi`. If you want to lay your panes out in a different way, you can update focus command in the `zide-yazi` script to make sure you focus the right pane.
-
-Both the `zide` and `zide-yazi` commands are somewhat configurable via some constants declared at the top of the scripts:
-
-### `zide`
-The main `zide` command controls opening new `zide` tabs, either in an existing session if inside one or starting a new one.
-
-1. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide `layouts/` directory
-
-### `zide-yazi`
-The `zide-yazi` command is a wrapper around `yazi` which does most of the magic of communicating with your editor to open files and directories through `zellij` pane commands. Unless you're making custom layouts, you'll probably never need to run this yourself, but it is somewhat configurable.
-
-1. `EDITOR_COMMAND_PREFIX`: Character to open command mode in editor. In editors such as Helix and NeoVim, this is the `:`.
-2. `EDITOR_OPEN_COMMAND`: Editor open command, e.g. "open" or "vsplit" in Helix, "edit" in NeoVim, etc.
-3. `EDITOR_CD_COMMAND`: Editor command to change the editor's current working directory. In Helix and NeoVim, this is `cd`.
-
-The defaults will all work out of the box when using Helix as your editor, as that's my editor of choice, and Helix's lack of an IDE-like layout is the whole reason for this project. If you use NeoVim, be sure to update these to match NeoVim's expected commands.
-
-Additionally, there's a custom `yazi/yazi.toml` file included which will allow you to customize `yazi` when using `zide`. I mainly use this to force `yazi` into a single column mode, but any other yazi config options you need that only apply when using zide can go here (including `keymap` and `theme` configs).
-command.
