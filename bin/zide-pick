@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-if ! command -v nnn &> /dev/null; then
-  echo "Error: 'nnn' is not installed or not in your PATH." >&2
-  exit 1
-fi
-
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <command>
 
@@ -14,6 +9,10 @@ Optional Parameters:
 
 Options:
   -h, --help        Show this help message and exit.
+
+Environment Variables:
+  ZIDE_YAZI_CONFIG  Custom yazi config file location to customize yazi on
+                    launch. Only used when using yazi as your picker.
 
 Description:
   Wrapper around Yazi that handles sending picked files to \`$EDITOR\` pane and
@@ -45,12 +44,55 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# Check if an argument is provided
+if [[ $# -le 1 ]]; then
+  echo "Please provide a picker to use"
+  show_help
+  exit 1
+fi
+
 # Optional params
 #
+# Program to use as a picker
+picker=${1}
 # Command to perform on the paths, available commands will be based on your editor
-command=${1}
+command=${2}
+# Optionally specify a working directory to open yazi into
+working_dir=${3} 
 
-paths=$(nnn -p - | while read -r; do printf "%q " "$REPLY"; done)
+# Get paths to edit based on picker
+paths=""
+case "${picker}" in
+  yazi)
+    if ! command -v yazi &> /dev/null; then
+      echo "Error: 'yazi' is not installed or not in your PATH." >&2
+      exit 1
+    fi
+    
+    # Yazi picker config location
+    yaziConfig=${ZIDE_YAZI_CONFIG:-"${ZIDE_DIR}/yazi"}
+
+    # Point yazi to the config directory for opening as a single layout pane
+    export YAZI_CONFIG_HOME="${yaziConfig}"
+
+    # Use yazi to pick our files
+    paths=$(yazi ${working_dir} --chooser-file=/dev/stdout | while read -r; do printf "%q " "$REPLY"; done)
+    ;;
+  nnn)
+    if ! command -v nnn &> /dev/null; then
+      echo "Error: 'nnn' is not installed or not in your PATH." >&2
+      exit 1
+    fi
+
+    # Use nnn to pick our files
+    paths=$(nnn -p - ${working_dir} | while read -r; do printf "%q " "$REPLY"; done)
+    ;;
+  *)
+    echo "Error: Invalid argument '$arg'"
+    show_help
+    exit 1
+    ;;
+esac
 
 # Open the paths in the $EDITOR
 printf "%s" "${paths}" | zide-edit ${command}
@@ -64,4 +106,4 @@ fi
 
 # Yazi exits once we pick paths, so re-open it manually by re-running this very script, and set
 # the working dir to be the dir of the first path
-"$0" ${command} ${config} ${dir}
+"$0" ${picker} ${command} ${dir}
