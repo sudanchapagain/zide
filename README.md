@@ -58,7 +58,7 @@ The main `zide` command controls opening new `zide` tabs, either in an existing 
 1. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide `layouts/` directory
 
 ### `zide-edit`
-The `zide-edit` command is responsible for sending the correct Zellij commands to the `$EDITOR` pane to open them. This command is used by the file picker wrapper scripts, and you'll probably never need to run it yourself.
+The `zide-edit` command will open the provided paths in your `$EDITOR` by sending the correct Zellij commands to the `$EDITOR` pane. While you probably don't ever need to run this yourself, it could be useful for any automations where you want to open files in your editor from a picker pane.
 
 The defaults will all work out of the box when using Helix as your editor, as that's my editor of choice, and Helix's lack of an IDE-like layout is the whole reason for this project. They should also work with other modal editors such as Vim and NeoVim. If you need to make changes, you can update the following environment variables:
 

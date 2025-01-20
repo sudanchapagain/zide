@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
 read -r -d '' HELP_TEXT << EOF
-Usage: $(basename "$0") [OPTIONS] <command>
+Usage: $(basename "$0") [OPTIONS] <path>...
 
-Required Parameters:
-  <command>              Command used to open files in \`$EDITOR\`.
-                         (open/hsplit/vsplit in Helix, edit/split/vsplit NeoVim)
+Parameters:
+  <path>...              List of paths to open in the \`$EDITOR\` pane.
 
 Options:
   -h, --help             Show this help message and exit.
+  -c, --command          Command used to open files in \`$EDITOR\`.
+                         (open/hsplit/vsplit in Helix, edit/split/vsplit NeoVim)
 
 Environment Variables:
   ZIDE_EDITOR_CMD_MODE   Character that opens command mode in \`$EDITOR\`.
@@ -25,12 +26,24 @@ show_help() {
   echo "$HELP_TEXT"
 }
 
+# Command to perform on the paths, available commands will be based on your editor
+command="open"
+
 # Parse command-line options
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -h|--help)
       show_help
       exit 0
+      ;;
+    -c|--command)
+      if [[ -n "$2" && "$2" != -* ]]; then
+        command="$2"
+        shift 2
+      else
+        echo "Error: --command requires a non-empty value."
+        exit 1
+      fi
       ;;
     -*)
       echo "Unknown option: $1"
@@ -44,12 +57,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Params
-# 
-# Command to perform on the paths, available commands will be based on your editor
-command=${1}
-
-read paths
+paths=$@
 path=${paths[0]}
 
 cmdModePrefix=${ZIDE_EDITOR_CMD_MODE:-":"}

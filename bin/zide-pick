@@ -81,7 +81,7 @@ picker=${picker:-${ZIDE_FILE_PICKER:-"yazi"}}
 paths=$("${ZIDE_DIR}/bin/pickers/zide-pick-${picker}" "${working_dir}")
 
 # Open the paths in the $EDITOR
-printf "%s" "${paths}" | zide-edit ${command}
+zide-edit --command "${command}" "${paths}" 
 
 # Grab the directory of the first provided path so we can reopen yazi in it
 path=${paths[0]}
