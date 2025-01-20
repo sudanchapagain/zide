@@ -69,7 +69,8 @@ working_dir=${2}
 
 # Get paths to edit based on picker
 paths=""
-case "${picker:-${ZIDE_FILE_PICKER:-"yazi"}}" in
+picker=${ZIDE_FILE_PICKER:-"yazi"}
+case "${picker}" in
   yazi)
     if ! command -v yazi &> /dev/null; then
       echo "Error: 'yazi' is not installed or not in your PATH." >&2
