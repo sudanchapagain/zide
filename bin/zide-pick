@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 read -r -d '' HELP_TEXT << EOF
-Usage: $(basename "$0") [OPTIONS] <command>
+Usage: $(basename "$0") [OPTIONS] <command> <working_dir>
 
 Optional Parameters:
   <command>         Command used to open files in \`$EDITOR\`
@@ -11,6 +11,8 @@ Options:
   -h, --help        Show this help message and exit.
 
 Environment Variables:
+  ZIDE_FILE_PICKER  File picker to use. Currently supporting "yazi" and "nnn", defaults
+                    to "yazi".
   ZIDE_YAZI_CONFIG  Custom yazi config file location to customize yazi on
                     launch. Only used when using yazi as your picker.
 
@@ -25,12 +27,26 @@ show_help() {
   echo "$HELP_TEXT"
 }
 
+# Program to use as a picker
+picker=""
+
 # Parse command-line options
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -h|--help)
       show_help
       exit 0
+      ;;
+    -p|--picker)
+      # picker="$1"
+      # shift 2
+      if [[ -n "$2" && "$2" != -* ]]; then
+        picker="$2"
+        shift 2
+      else
+        echo "Error: --picker requires a non-empty value."
+        exit 1
+      fi
       ;;
     -*)
       echo "Unknown option: $1"
@@ -44,25 +60,16 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Check if an argument is provided
-if [[ $# -le 1 ]]; then
-  echo "Please provide a picker to use"
-  show_help
-  exit 1
-fi
-
 # Optional params
 #
-# Program to use as a picker
-picker=${1}
 # Command to perform on the paths, available commands will be based on your editor
-command=${2}
+command=${1}
 # Optionally specify a working directory to open yazi into
-working_dir=${3} 
+working_dir=${2} 
 
 # Get paths to edit based on picker
 paths=""
-case "${picker}" in
+case "${picker:-${ZIDE_FILE_PICKER:-"yazi"}}" in
   yazi)
     if ! command -v yazi &> /dev/null; then
       echo "Error: 'yazi' is not installed or not in your PATH." >&2
@@ -106,4 +113,4 @@ fi
 
 # Yazi exits once we pick paths, so re-open it manually by re-running this very script, and set
 # the working dir to be the dir of the first path
-"$0" ${picker} ${command} ${dir}
+"$0" --picker ${picker} ${command} ${dir}

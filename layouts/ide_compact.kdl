@@ -9,9 +9,8 @@ layout {
             }
         }
         pane split_direction="vertical" {
-            pane size=40 name="yazi" {
-              name "yazi"
-              command "zide-yazi"
+            pane size=40 name="filepicker" {
+              command "zide-pick"
               args "open"
             }
             pane name="editor" {
@@ -34,9 +33,8 @@ layout {
                 }
             }
             pane split_direction="horizontal" {
-                pane size=20 name="yazi" {
-                  name "yazi"
-                  command "zide-yazi"
+                pane size=20 name="filepicker" {
+                  command "zide-pick"
                   args "open"
                 }
                 pane name="editor" {
