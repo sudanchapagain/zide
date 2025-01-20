@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if ! command -v yazi &> /dev/null; then
+  echo "Error: 'yazi' is not installed or not in your PATH." >&2
+  exit 1
+fi
+
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <command>
 
