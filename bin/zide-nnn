@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+if ! command -v nnn &> /dev/null; then
+  echo "Error: 'nnn' is not installed or not in your PATH." >&2
+  exit 1
+fi
+
+read -r -d '' HELP_TEXT << EOF
+Usage: $(basename "$0") [OPTIONS] <command>
+
+Optional Parameters:
+  <command>         Command used to open files in \`$EDITOR\`
+	<working_dir>     Optionally specify a working directory to open yazi intoOptions:
+
+Options:
+  -h, --help        Show this help message and exit.
+
+Description:
+  Wrapper around Yazi that handles sending picked files to \`$EDITOR\` pane and
+  then re-opening Yazi. If a directory was the picked path, Yazi will re-open in
+  that directory as its new working dir.
+EOF
+
+# Function to display the help text
+show_help() {
+  echo "$HELP_TEXT"
+}
+
+# Parse command-line options
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help)
+      show_help
+      exit 0
+      ;;
+    -*)
+      echo "Unknown option: $1"
+      echo "Use --help or -h for usage information."
+      exit 1
+      ;;
+    *)
+      # Stop processing options when a positional parameter is encountered
+      break
+      ;;
+  esac
+done
+
+# Optional params
+#
+# Command to perform on the paths, available commands will be based on your editor
+command=${1}
+
+paths=$(nnn -p - | while read -r; do printf "%q " "$REPLY"; done)
+
+# Open the paths in the $EDITOR
+printf "%s" "${paths}" | zide-edit ${command}
+
+# Grab the directory of the first provided path so we can reopen yazi in it
+path=${paths[0]}
+dir=${path}
+if [[ -f "${path}" ]]; then
+	dir=$(dirname "${path}")
+fi
+
+# Yazi exits once we pick paths, so re-open it manually by re-running this very script, and set
+# the working dir to be the dir of the first path
+"$0" ${command} ${config} ${dir}
