@@ -5,13 +5,13 @@ Usage: $(basename "$0") [OPTIONS] <working_dir> <layout>
 
 Optional Parameters:
   <working_dir>        Working directory to open in, defaults to `pwd`
-  <layout>             Layout to use from this project's `layouts/` directory
+  <layout>             Layout to use from this project's \`layouts/\` directory
 
 Options:
   -h, --help           Show this help message and exit.
 
 Environment Variables:
-  ZIDE_DEFAULT_LAYOUT  Default zide layout to use from the `layouts/` directory.
+  ZIDE_DEFAULT_LAYOUT  Default zide layout to use from the \`layouts/\` directory.
 
 Description:
   Start using Zellij in an IDE layout. The command will do one of two things:
@@ -30,7 +30,7 @@ Description:
   The non-compact layout is similar to the compact one, but with a 3rd,
   100-column wide pane to the right. The two layouts also differ slightly in how
   the swap layouts work. Any additional layouts you add or configure in the zide
-  `layouts/` directory will be available to use from the zide command.
+  \`layouts/\` directory will be available to use from the zide command.
 EOF
 
 # Function to display the help text
