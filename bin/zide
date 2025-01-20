@@ -9,6 +9,8 @@ Optional Parameters:
 
 Options:
   -h, --help           Show this help message and exit.
+  -p, --picker         File picker to use. Available file pickers are listed in
+                       bin/lib. Equivalent to setting ZIDE_FILE_PICKER env var.
 
 Environment Variables:
   ZIDE_DEFAULT_LAYOUT  Default zide layout to use from the \`layouts/\` directory.
@@ -45,6 +47,15 @@ while [[ $# -gt 0 ]]; do
       show_help
       exit 0
       ;;
+    -p|--picker)
+      if [[ -n "$2" && "$2" != -* ]]; then
+        picker="$2"
+        shift 2
+      else
+        echo "Error: --picker requires a non-empty value."
+        exit 1
+      fi
+      ;;
     -*)
       echo "Unknown option: $1"
       echo "Use --help or -h for usage information."
@@ -73,6 +84,7 @@ fi
 
 # Export location of the zide project files for further use
 export ZIDE_DIR=$(dirname "$script_dir")
+export ZIDE_FILE_PICKER=${picker:-${ZIDE_FILE_PICKER}}
 
 layout_path="$ZIDE_DIR/layouts/$layout"
 if [ -n "$ZELLIJ" ]; then

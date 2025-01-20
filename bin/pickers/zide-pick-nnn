@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+read -r -d '' HELP_TEXT << EOF
+Usage: $(basename "$0") [OPTIONS] <working_dir>
+
+Optional Parameters:
+	<working_dir>     Optionally specify a working directory to open yazi into:
+
+Options:
+  -h, --help        Show this help message and exit.
+
+Description:
+  Convenience wrapper that handles generating a space-separated list of paths
+  from nnn.
+EOF
+
+if ! command -v nnn &> /dev/null; then
+  echo "Error: 'nnn' is not installed or not in your PATH." >&2
+  exit 1
+fi
+
+working_dir=${1}
+
+# Use nnn to pick our files
+echo $(nnn -p - ${working_dir} | while read -r; do printf "%q " "$REPLY"; done)
