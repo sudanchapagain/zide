@@ -1,29 +1,50 @@
 #!/usr/bin/env bash
-#
-# This script turns yazi into a side-bar style file picker (think VS Code) when using Zellij. It
-# works by assuming you have a Zellij layout that has yazi on the lefti (or top), and your editor
-# on the right (or bottom). When you open a file or directory in yazi, it switches to the next pane
-# (which is hopefully your editor) and types the :open command to open the file or directory in the
-# editor. Once done opening the file(s) in your editor, yazi will re-open (and if you chose a
-# directory, that directory will be the new working dir).
 
-# Configurable constants
-#
-# Character to open command mode in editor
-EDITOR_COMMAND_PREFIX=":"
-# Editor open command, e.g. "open" or "vsplit" in helix, "edit" in nvim, etc.
-EDITOR_OPEN_COMMAND="open"
-# Editor command to change the editor's current working directory
-EDITOR_CD_COMMAND="cd"
-# Location of yazi config toml file
-# YAZI_CONFIG="$HOME/.config/zide"
+read -r -d '' HELP_TEXT << EOF
+Usage: $(basename "$0") [OPTIONS] <command>
+
+Optional Parameters:
+  <command>         Command used to open files in \$EDITOR
+	<config>          Yazi picker config location  
+	<working_dir>     Optionally specify a working directory to open yazi intoOptions:
+
+Options:
+  -h, --help        Show this help message and exit.
+
+Description:
+  Wrapper around yazi that handles sending picked files to the \$EDITOR pane and
+  then re-opening yazi. If a directory was the picked path, yazi will re-open in
+  that directory as its new working dir.
+EOF
+
+# Function to display the help text
+show_help() {
+  echo "$HELP_TEXT"
+}
+
+# Parse command-line options
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help)
+      show_help
+      exit 0
+      ;;
+    -*)
+      echo "Unknown option: $1"
+      echo "Use --help or -h for usage information."
+      exit 1
+      ;;
+    *)
+      # Stop processing options when a positional parameter is encountered
+      break
+      ;;
+  esac
+done
 
 # Optional params
-# You can optionall customize the command used to open files in your editor, the location of a
-# custom config file for yazi, and the working directory.
 #
 # Command to perform on the paths, available commands will be based on your editor
-command=${1:-${EDITOR_OPEN_COMMAND}}
+command=${1}
 # Yazi picker config location
 config=${2:-"${ZIDE_DIR}/yazi"}
 # Optionally specify a working directory to open yazi into
@@ -32,33 +53,17 @@ working_dir=${3}
 # Point yazi to the config directory for opening as a single layout pane
 export YAZI_CONFIG_HOME="${config}"
 
+# Use yazi to pick our files
 paths=$(yazi ${working_dir} --chooser-file=/dev/stdout | while read -r; do printf "%q " "$REPLY"; done)
+
+# Open the paths in the $EDITOR
+printf "%s" "${paths}" | zide-edit ${command}
+
+# Grab the directory of the first provided path so we can reopen yazi in it
 path=${paths[0]}
-
-# Focus editor pane, must be the next pane after yazi
-zellij action focus-next-pane
-
-# Grab the directory of the first provided path
 dir=${path}
 if [[ -f "${path}" ]]; then
 	dir=$(dirname "${path}")
-fi
-
-# If we're trying to open a single path and it's a directory, change the working dir to it in our
-# editor. This ensures any other commands in our editor (such as :open, :mv, etc) have the correct
-# cwd set.
-if [ ! -f "${path}" ] && [ ${#paths[@]} -eq 1 ]; then
-	zellij action write 27 # send <Escape> key to enter NORMAL mode
-	zellij action write-chars "${EDITOR_COMMAND_PREFIX}${EDITOR_CD_COMMAND} ${path}"
-	zellij action write 13 # send <Enter> key
-	sleep 0.25
-fi
-
-# Open paths in the editor
-if [[ -n "${paths}" ]]; then
-	zellij action write 27 # send <Escape> key to enter NORMAL mode
-	zellij action write-chars "${EDITOR_COMMAND_PREFIX}${command} ${paths}"
-	zellij action write 13 # send <Enter> key
 fi
 
 # Yazi exits once we pick paths, so re-open it manually by re-running this very script, and set

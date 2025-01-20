@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+# Configurable constants
+#
+# Character to open command mode in editor
+EDITOR_COMMAND_PREFIX=":"
+# Editor command to change the editor's current working directory
+EDITOR_CD_COMMAND="cd"
+
+read -r -d '' HELP_TEXT << EOF
+Usage: $(basename "$0") [OPTIONS] <command>
+
+Required Parameters:
+  <command>         Command used to open files in your \$EDITOR
+                    (open/hsplit/vsplit in helix, edit/split/vsplit in nvim).
+
+Options:
+  -h, --help        Show this help message and exit.
+
+Description:
+  Handles reading in a list of paths from stdin and uses zellij's action
+  commands to switch to the \$EDITOR's pane and runs the open commands in it.
+EOF
+
+# Function to display the help text
+show_help() {
+  echo "$HELP_TEXT"
+}
+
+# Parse command-line options
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help)
+      show_help
+      exit 0
+      ;;
+    -*)
+      echo "Unknown option: $1"
+      echo "Use --help or -h for usage information."
+      exit 1
+      ;;
+    *)
+      # Stop processing options when a positional parameter is encountered
+      break
+      ;;
+  esac
+done
+
+# Params
+# 
+# Command to perform on the paths, available commands will be based on your editor
+command=${1}
+
+read paths
+path=${paths[0]}
+
+# Focus editor pane, must be the next pane after yazi
+zellij action focus-next-pane
+
+# If we're trying to open a single path and it's a directory, change the working dir to it in our
+# editor. This ensures any other commands in our editor (such as :open, :mv, etc) have the correct
+# cwd set.
+if [ ! -f "${path}" ] && [ ${#paths[@]} -eq 1 ]; then
+	zellij action write 27 # send <Escape> key to enter NORMAL mode
+	zellij action write-chars "${EDITOR_COMMAND_PREFIX}${EDITOR_CD_COMMAND} ${path}"
+	zellij action write 13 # send <Enter> key
+	sleep 0.25
+fi
+
+# Open paths in the editor
+if [[ -n "${paths}" ]]; then
+	zellij action write 27 # send <Escape> key to enter NORMAL mode
+	zellij action write-chars "${EDITOR_COMMAND_PREFIX}${command} ${paths}"
+	zellij action write 13 # send <Enter> key
+fi
