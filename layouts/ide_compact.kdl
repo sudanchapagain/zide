@@ -11,7 +11,6 @@ layout {
         pane split_direction="vertical" {
             pane size=40 name="filepicker" {
               command "zide-pick"
-              args "open"
             }
             pane name="editor" {
               command "$EDITOR"
@@ -34,8 +33,7 @@ layout {
             }
             pane split_direction="horizontal" {
                 pane size=20 name="filepicker" {
-                  command "zide-pick"
-                  args "open"
+                    command "zide-pick"
                 }
                 pane name="editor" {
                   command "$EDITOR"

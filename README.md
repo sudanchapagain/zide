@@ -1,15 +1,17 @@
-# `zide`: A Zellij IDE-like Environment
+# `zide`: A Zellij IDE-like Layout Environment
+
+Zide is a combination of [Zellij](https://zellij.dev) layouts and convenience `bash` scripts that creates an IDE-like layout environment. It mainly consists of a file picker (such as `yazi`) in one pane, and your editor of choice in the main pane. You can browse the file tree in your picker pane, and then any files that are selected or opened do so in the editor's pane.
 
 ![zide screenshot](https://github.com/user-attachments/assets/6b26f0af-1a3e-486a-a395-e6f4cc6c355b)
 
-Zide is a combination of Zellij layouts and convenience `bash` scripts that creates an IDE-like experience in `zellij` (think VS Code). It mainly consists of a file picker (using `yazi` or other supported projects) in one pane, and your editor of choice in the main pane. The project is heavily inspired by the [`yazelix`](https://github.com/luccahuguet/yazelix) project, but simplifies it down to work in most shells (instead of requiring `nushell`) and more editors (vs just Helix) with less requied configuration.
+The project was inspired by the [`yazelix`](https://github.com/luccahuguet/yazelix) project, but simplifies it down to work in most shells (instead of requiring `nushell`), more editors (vs just Helix), and essentailly any file picker, with less required configuration.
 
 ## Features
 
-1. Start a `zellij` layout with a filepicker on the left and your `$EDITOR` on the right
-2. Browse for files in a visual file picker of your choosing (current supporting `yazi` and `nnn`), and open any selected files or directories in your `$EDITOR` pane
-3. Open multiple files at once in your `$EDITOR` if your picker supports a multiselect UI
-4. When opening a directory, set that directory as the working directory in your `$EDITOR` automatically 
+1. Start a `zellij` layout with a filepicker on the left and your editor on the right
+1. Browse for files in any visual file picker of your choosing, and open any selected files or directories in your editor pane
+1. Open multiple files at once in your editor if your picker supports a multiselect UI
+1. When opening a directory, set that directory as the working directory in your editor automatically 
 
 ## Why?
 
@@ -25,66 +27,87 @@ export PATH="$PATH:$HOME/.config/zide/bin"
 
 ### Dependencies
 
-This project cobbles together [`zellij`](https://zellij.dev) and [`yazi`](https://yazi-rs.github.io) (and some other file pickers), and so you'll need these installed for any of this to work. Additionally, the pre-configured layouts have a [`lazygit`](https://github.com/jesseduffield/lazygit) floating pane for easy git integration, so you'll need `lazygit` installed if you plan on using that. Otherwise, the rest is written in plain `bash` so it should work on a wide variety of systems without further dependencies.
+This project integrates [`zellij`](https://zellij.dev) with a file picker (assumes [`yazi`](https://yazi-rs.github.io) by default, but you can use any visual file picker you want), and so you'll need these installed for any of this to work. Additionally, the pre-configured layouts have a [`lazygit`](https://github.com/jesseduffield/lazygit) floating pane for easy git integration, so you'll need `lazygit` installed if you plan on using that. Otherwise, the rest is written in plain `bash` so it should work on a wide variety of systems without further dependencies.
 
 ## Usage
 
-Run the `zide` command to start using Zellij as an IDE. The command will do one of two things:
+Run the `zide` command to start using Zellij with the zide-style IDE-like layout. The command will do one of two things:
 1. If you're not currently in a `zellij` session, it'll start one
 2. If you're in an existing `zellij` session, it'll create a new tab
 
-By default starting `zide` will use the compact layout, consisting of a vertical split of panes with a filepicker  on the left occupying a small slice of it, and your `$EDITOR` on the right occupying the rest, with your current working directory set as the directory in both your `$EDITOR` and the filepicker.
+By default starting `zide` will use a layout consisting of 2 vertical split of panes with a filepicker on the left occupying a small slice of it, and your editor on the right occupying the rest, with your current working directory set as the directory in both your editor and the filepicker.
 
-However, you can customize a few options using the `zide` startup command:
+You can provide the `zide` command a different directory, and choose from one of the other layouts available in this project's `layouts/` directory.
 
 ```sh
-# Start zide layout in a different directory and use the non-compact layout
+# Start zide layout in a different directory and use the alternate layout
 $ zide ~/development/zide ide
 ```
 
 Passing in a working directory will ensure that the filepicker, your editor, and any future panes are all working in the same directory. By default, it'll use the current working directory from which you're calling the command.
 
-The non-compact layout is similar to the compact one, but with a 3rd, 100-column wide pane to the right. The two layouts also differ slightly in how the swap layouts work. Any additional layouts you add or configure in the zide `layouts/` directory will be available to use from the `zide`.
+The alternate layout is similar to the default one, but with a 3rd, 100-column wide pane to the right. The two layouts also differ slightly in how the swap layouts work. Any additional layouts you add or configure in the zide `layouts/` directory will be available to use from the `zide`, and will be git ignored.
 
 ## Configuration
 
-You can configure the existing layouts (or create new ones) by editing the `.kdl` files in the `layouts/` directory. Here you can tweak things such as how wide you want your picker pane to be vs the editor, and any other layout tweaks you want to make. The one absolute requirement is that **your editor pane must be next to the picker pane**. There's no way to uniquely identify the different panes in `zellij`, therefore these scripts depend on calling `zellij action focus-next-pane` to focus your editor from your picker. If you want to lay your panes out in a different way, you can update focus command in the `zide-pick` script to make sure you focus the right pane.
+If you want to make your own layouts, duplicate the built-in layouts in the `layouts/` directory and give them custom names. You'll be able to refer to those names when providing a custom layout to the `zide` command.
 
-Both the `zide` and `zide-pick` commands are somewhat configurable via some environment variables which you can override in your shell or session:
+In the layouts you can tweak things such as how wide you want your picker pane to be vs the editor, and any other layout tweaks you want to make. The one absolute requirement is that **your editor pane must be next to the picker pane**. There's no way to uniquely identify the different panes in `zellij`, therefore these scripts depend on calling `zellij action focus-next-pane` to focus your editor from your picker.
 
-### `zide`
-The main `zide` command controls opening new `zide` tabs, either in an existing session if inside one or starting a new one.
+### Environment Variables
 
-1. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide `layouts/` directory
+This project provides customization via the use of environment variables:
 
-### `zide-edit`
-The `zide-edit` command will open the provided paths in your `$EDITOR` by sending the correct Zellij commands to the `$EDITOR` pane. While you probably don't ever need to run this yourself, it could be useful for any automations where you want to open files in your editor from a picker pane.
-
-The defaults will all work out of the box when using Helix as your editor, as that's my editor of choice, and Helix's lack of an IDE-like layout is the whole reason for this project. They should also work with other modal editors such as Vim and NeoVim. If you need to make changes, you can update the following environment variables:
-
+1. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide `layouts/` directory. Feel free to add some layouts of your own here (they're gitignore'd).
+1. `ZIDE_FILE_PICKER`: The file picker command to use, defaults to `yazi` if none is set.
 1. `ZIDE_EDITOR_CMD_MODE`: Character to open command mode in editor. In editors such as Helix and NeoVim, this is the `:`.
-2. `ZIDE_EDITOR_CD_CMD`: Editor command to change the editor's current working directory. In Helix and NeoVim, this is `cd`.
+1. `ZIDE_EDITOR_CD_CMD`: Editor command to change the editor's current working directory. In Helix and NeoVim, this is `cd`.
 
-### `zide-pick`
-The `zide-pick` command is a wrapper around support picker command (current `yazi` and `nnn`) which does most of the magic of communicating with your editor to open files and directories through `zellij` pane commands. Unless you're making custom layouts, you'll probably never need to run this yourself.
+If you were to use zide with, say, `nnn` as your filepicker and `nvim` as your editor, you would configure it to as so:
 
-This script also has some environment variables you can set to configure it:
-1. `ZIDE_FILE_PICKER`: The file picker command to use, defaults to `yazi`. Currently supports `yazi` and `nnn`.
-2. `ZIDE_YAZI_CONFIG`: If you're using `yazi`, there's a custom `yazi/yazi.toml` file included which will allow you to customize `yazi` when using `zide`. I mainly use this to force `yazi` into a single column mode, but any other yazi config options you need that only apply when using `zide `can go here (including `keymap` and `theme` configs). You can point to different config directories using the `ZIDE_YAZI_CONFIG` env var.
+```sh
+# At runtime
+env ZIDE_FILE_PICKER=nnn zide
+
+# Or permanently in your shell profile
+export ZIDE_FILE_PICKER=nnn
+```
+
+If you're using `yazi` and want to run it in single-pane mode only in zide, you can point it to a custom config as your picker:
+
+```sh
+# Assuming you have a custom config at ~/.config/yazi-single/yazi.toml
+export ZIDE_FILE_PICKER="env YAZI_CONFIG_HOME=$HOME/.config/yazi-single yazi"
+```
+
+This will use that config when running in zide, but not when running `yazi` normally.
 
 ## How it works
 
-This project consists of 3 parts:
+This project consists of 4 parts:
 1. Pre-configured `zellij` layouts
-2. A wrapper script around file pickers called `zide-pick`
-3. The `zide` command to launch you into zide mode
+1. The `zide` command to launch you into zide mode
+1. A wrapper script around launching file pickers called `zide-pick`
+1. A wrapper script that controls opening files in your editor called `zide-edit`
 
-Conceptually, this is the basic flow of the system. First, we start up `zellij` with our layout (say two panes, left is `yazi` via our `zide-pick` wrapper script, and right is our `$EDITOR`). When you choose files in `yazi`, the `zide-pick` script grabs those paths and turns them into a space-separated list. So if you chose `file1.txt` and `subdir/file2.txt`, it would turn it into `file1.txt subdir/file2.txtl`.
+### `zide`
+The main `zide` command controls opening new `zide` tabs, either in an existing session if inside one or starting a new one. It sets some environment variables, updates the working directory, and starts `zellij`.
 
-Once we have our files, the `zide-pick` script then switches the focused pane using `zellij action focus-next-pane` (which hopefully is the pane with your `$EDITOR`). It then sends that pane the following commands:
-1. `zellij action write 27`: This sends the `<ESC>` key, to force us into Normal mode in the `$EDITOR`.
-2. `zellij action write-chars :open file1.txt subdir/file2.txt`: This essentially just sends the `:open file1.txt subdir/file2.txt` command to your `$EDITOR`, which will tell it to open those files.
-3. `zellij action write-chars :cd subdir/`: **If you chose a directory** in your filepicker it'll also send the `cd` command to set the working directory to that directory in your `$EDITOR`.
-4. `zellij action write 13`: Send the `<ENTER>` key to submit the commands.
+### `zide-pick`
+The `zide-pick` command is a small wrapper around the file pickers. It handles launching the correct picker based on either the `--picker` flag or the `ZIDE_FILE_PICKER` environment variable. This lets us avoid having to hard-code what picker to use in our layouts.
 
-Lastly, the filepickers clode themselves once you choose files, so `zide-pick` will re-run itself so that they  re-open. If you chose a `directory`, it'll also re-open itself to that directory as its working dir.
+It also has one more very important job, which is changing our editor env var to be `zide-edit` instead of your actual editor, so that the pickers open up our script instead of the real editor when picking files.
+
+### `zide-edit`
+The `zide-edit` command takes the place of your `EDITOR` (and stores the original value in `ZIDE_EDITOR`). Instead of launching your `EDITOR`, it instead automating switching to your open editor pane, and sending it the correct `zellij` action commands so that it opens those files instead of the editor opening in the file picker pane.
+
+---
+
+Conceptually, this is the basic flow of the system.
+
+We start up `zellij` with our layout (say two panes, left is `yazi` via our `zide-pick` wrapper script, and right is our editor). When you choose files in `yazi`, `yazi` will attempt to open those files in `EDITOR`, which now points to `zide-edit`. The `zide-edit` script then switches the focused pane using `zellij action focus-next-pane` (which hopefully is the pane with your editor). It then sends that pane the following commands:
+
+1. `zellij action write 27`: This sends the `<ESC>` key, to force us into Normal mode in your editor.
+1. `zellij action write-chars :open file1.txt subdir/file2.txt`: This essentially just sends the `:open file1.txt subdir/file2.txt` command to your editor, which will tell it to open those files.
+1. `zellij action write-chars :cd subdir/`: **If you chose a directory** in your filepicker it'll also send the `cd` command to set the working directory to that directory in your editor.
+1. `zellij action write 13`: Send the `<ENTER>` key to submit the commands.

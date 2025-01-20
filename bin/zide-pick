@@ -1,23 +1,21 @@
 #!/usr/bin/env bash
 
 read -r -d '' HELP_TEXT << EOF
-Usage: $(basename "$0") [OPTIONS] <command> <working_dir>
+Usage: $(basename "$0") [OPTIONS] <working_dir>
 
 Optional Parameters:
-  <command>         Command used to open files in \`$EDITOR\`
 	<working_dir>     Optionally specify a working directory to open the file
 	                  picker into.
 
 Options:
   -h, --help        Show this help message and exit.
+  -c, --command     Command used to open files in \`$EDITOR\`
   -p, --picker      File picker to use. Available file pickers are listed in
                     bin/lib. Setting this will override the ZIDE_FILE_PICKER
                     env var.
-  -N, --no-reopen   If set, will not try to re-open the picker after picking files
 
 Environment Variables:
-  ZIDE_FILE_PICKER  File picker to use. Available file pickers are listed in
-                    bin/lib.
+  ZIDE_FILE_PICKER  File picker to use, needs to be declared in your \$PATH.
 
 Description:
   Wrapper around Yazi that handles sending picked files to \`$EDITOR\` pane and
@@ -32,8 +30,8 @@ show_help() {
 
 # Program to use as a picker
 picker=""
-# Whether to re-open the picker after picking
-no_reopen=false
+# Command to perform on the paths, available commands will be based on your editor
+command=""
 
 # Parse command-line options
 while [[ $# -gt 0 ]]; do
@@ -41,6 +39,15 @@ while [[ $# -gt 0 ]]; do
     -h|--help)
       show_help
       exit 0
+      ;;
+    -c|--command)
+      if [[ -n "$2" && "$2" != -* ]]; then
+        command="$2"
+        shift 2
+      else
+        echo "Error: --command requires a non-empty value."
+        exit 1
+      fi
       ;;
     -p|--picker)
       if [[ -n "$2" && "$2" != -* ]]; then
@@ -50,10 +57,6 @@ while [[ $# -gt 0 ]]; do
         echo "Error: --picker requires a non-empty value."
         exit 1
       fi
-      ;;
-    -N|--no-reopen)
-      no_reopen=true
-      shift
       ;;
     -*)
       echo "Unknown option: $1"
@@ -67,31 +70,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Optional params
-#
-# Command to perform on the paths, available commands will be based on your editor
-command=${1}
-# Optionally specify a working directory to open yazi into
-working_dir=${2} 
-
 # Read picker defaults from env var or hard-coded default if a flag not passed
 picker=${picker:-${ZIDE_FILE_PICKER:-"yazi"}}
+working_dir=${1}
 
-# Get paths to edit based on picker from picker command
-paths=$("${ZIDE_DIR}/bin/pickers/zide-pick-${picker}" "${working_dir}")
 
-# Open the paths in the $EDITOR
-zide-edit --command "${command}" "${paths}" 
-
-# Grab the directory of the first provided path so we can reopen yazi in it
-path=${paths[0]}
-dir=${path}
-if [[ -f "${path}" ]]; then
-	dir=$(dirname "${path}")
+if ! command -v ${picker} &> /dev/null; then
+  echo "Error: '${picker}' is not installed or not in your PATH." >&2
+  exit 1
 fi
 
-if ! ${no_reopen}; then
-  # Pickers exit once we pick paths, so re-open it manually by re-running this very script, and set
-  # the working dir to be the dir of the first path
-  "$0" --picker ${picker} ${command} ${dir}
-fi
+env EDITOR="zide-edit" ${picker} ${working_dir}

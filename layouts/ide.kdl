@@ -11,7 +11,6 @@ layout {
         pane split_direction="vertical" {
             pane size=40 name="yazi" {
               command "zide-pick"
-              args "yazi" "open"
             }
             pane name="editor" {
               command "$EDITOR"
@@ -37,8 +36,7 @@ layout {
             }
             pane split_direction="horizontal" {
                 pane size=20 name="yazi" {
-                  command "zide-pick"
-                  args "yazi" "open"
+                    command "zide-pick"
                 }
                 pane split_direction="vertical" {
                     pane name="editor" {
