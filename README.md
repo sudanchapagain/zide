@@ -70,7 +70,7 @@ This project provides customization via the use of environment variables:
 
 ### Useful Configs
 
-#### Yazi
+#### [Yazi](https://yazi-rs.github.io/)
 
 If you're using `yazi` and want to use a custom config other than your default and the one included in this project, you can point to a custom config directory in the `ZIDE_USE_YAZI_CONFIG` var.
 
@@ -89,7 +89,7 @@ export ZIDE_USE_YAZI_CONFIG="$HOME/.config/yazi-custom"
 
 This will use that config when running in zide, but not when running `yazi` normally.
 
-#### nnn
+#### [nnn](https://github.com/jarun/nnn)
 
 When using zide with `nnn` as your filepicker you'll have to make sure to set `NNN_OPENER` to point to `zide-edit`:
 
@@ -100,7 +100,7 @@ export NNN_OPENER="zide-edit"
 
 This makes sure that `nnn` will use zide to open your files when you select them.
 
-#### lf
+#### [lf](https://github.com/gokcehan/lf)
 
 When using zide with `lf`, you'll probably want to start it in single column mode. Similarly to Yazi above, zide comes with a simple config file it points to when using `lf` that turns this on by default called `ZIDE_USE_LF_CONFIG`. Similarly, set it to `false` to disable it, or give it a value to point it to a config outside of this project.
 
