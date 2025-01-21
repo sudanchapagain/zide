@@ -16,9 +16,12 @@ Options:
 
 Environment Variables:
   ZIDE_FILE_PICKER      File picker to use, needs to be declared in your \$PATH.
-  ZIDE_USE_YAZI_CONFIG  If true, will use the yazi.toml file in this project
-                        when using yazi as your picker. The config file in this
-                        project automatically puts yazi into a single-pane mode.
+  ZIDE_USE_YAZI_CONFIG  By default (empty), will use the yazi.toml file in this
+                        project when using yazi as your picker. The config file
+                        in this project automatically puts yazi into a
+                        single-pane mode. To disable this behavior, set this to
+                        false. If you with to point to a custom config directory
+                        location, set this to that value.
 
 Description:
   Wrapper around file pickers that sets \`zide-edit\` as the \`$EDITOR\` so that
@@ -84,7 +87,8 @@ fi
 
 envs="EDITOR='zide-edit'"
 if [[ "${picker}" == "yazi" && "${ZIDE_USE_YAZI_CONFIG}" != "false" ]]; then
-  envs="${envs} YAZI_CONFIG_HOME=${ZIDE_DIR}/yazi"
+  yaziConfigDir="${ZIDE_USE_YAZI_CONFIG:-${ZIDE_DIR}/yazi}"
+  envs="${envs} YAZI_CONFIG_HOME=${yaziConfigDir}"
 fi
 
 env -S "${envs}" ${picker} ${working_dir}
