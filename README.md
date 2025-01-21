@@ -73,6 +73,13 @@ This project provides customization via the use of environment variables:
 
 If you're using `yazi` and want to run it in single-pane mode only in zide, you can point it to a custom config as your picker:
 
+In for e.g. `~/.config/yazi-single/yazi.toml`
+
+```toml
+[manager]
+ratio = [0, 1, 0]
+```
+
 ```sh
 # Assuming you have a custom config at ~/.config/yazi-single/yazi.toml
 export ZIDE_FILE_PICKER="env YAZI_CONFIG_HOME=$HOME/.config/yazi-single yazi"
