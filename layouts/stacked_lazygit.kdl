@@ -1,16 +1,18 @@
 layout {
     tab {
-        pane split_direction="vertical" {
-            filepicker size=40
-            editor
-            pane split_direction="horizontal" size=100 {
-              pane name="shell" {}
-            }
+        pane stacked=true {
+            filepicker
+            editor expanded=true
+            lazygit
         }
         compact_bar size=1
     }
 
     // TEMPLATES
+    pane_template name="lazygit" start_suspended=true {
+        command "lazygit"
+    }
+
     pane_template name="filepicker" {
         command "zide-pick"
     }
