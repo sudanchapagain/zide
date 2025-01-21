@@ -1,5 +1,5 @@
 layout {
-    tab hide_floating_panes=true {
+    tab {
         pane stacked=true {
             filepicker
             editor expanded=true
