@@ -11,7 +11,7 @@ layout {
     }
 
     // TEMPLATES
-    pane_template name="lazygit" start_suspended=true close_on_exit=true {
+    pane_template name="lazygit" start_suspended=true {
         command "lazygit"
         x "10%"
         y "5%"

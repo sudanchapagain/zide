@@ -3,4 +3,5 @@
 layouts/*.kdl
 # Track the built-in layouts in git
 !layouts/compact.kdl
+!layouts/stacked.kdl
 !layouts/wide.kdl
