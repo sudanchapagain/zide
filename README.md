@@ -67,15 +67,9 @@ This project provides customization via the use of environment variables:
 1. `ZIDE_EDITOR_CMD_MODE`: Character to open command mode in editor. In editors such as Helix and NeoVim, this is the `:`.
 1. `ZIDE_EDITOR_CD_CMD`: Editor command to change the editor's current working directory. In Helix and NeoVim, this is `cd`.
 
-If you were to use zide with, say, `nnn` as your filepicker and `nvim` as your editor, you would configure it to as so:
+### Useful Configs
 
-```sh
-# At runtime
-env ZIDE_FILE_PICKER=nnn zide
-
-# Or permanently in your shell profile
-export ZIDE_FILE_PICKER=nnn
-```
+#### Yazi
 
 If you're using `yazi` and want to run it in single-pane mode only in zide, you can point it to a custom config as your picker:
 
@@ -85,6 +79,17 @@ export ZIDE_FILE_PICKER="env YAZI_CONFIG_HOME=$HOME/.config/yazi-single yazi"
 ```
 
 This will use that config when running in zide, but not when running `yazi` normally.
+
+#### nnn
+
+When using zide with `nnn` as your filepicker you'll have to make sure to set `NNN_OPENER` to point to `zide-edit`:
+
+```sh
+export ZIDE_FILE_PICKER="nnn -e"
+export NNN_OPENER="zide-edit"
+```
+
+This makes sure that `nnn` will use zide to open your files when you select them.
 
 ## How it works
 
