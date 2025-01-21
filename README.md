@@ -50,6 +50,10 @@ The alternate layout is similar to the default one, but with a 3rd, 100-column w
 
 ## Configuration
 
+For basic help, you can pass the `--help` or `-h` flag any of the commands to get details on how to configure them.
+
+### Layouts
+
 If you want to make your own layouts, duplicate the built-in layouts in the `layouts/` directory and give them custom names. You'll be able to refer to those names when providing a custom layout to the `zide` command.
 
 In the layouts you can tweak things such as how wide you want your picker pane to be vs the editor, and any other layout tweaks you want to make. The one absolute requirement is that **your editor pane must be next to the picker pane**. There's no way to uniquely identify the different panes in `zellij`, therefore these scripts depend on calling `zellij action focus-next-pane` to focus your editor from your picker.
