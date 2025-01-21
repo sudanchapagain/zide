@@ -73,7 +73,7 @@ done
 # Working directory to open in, defaults to pwd
 cwd=${1:-$(pwd)} 
 # Available layouts can be found in the zide layouts/ directory
-layout=${2:-${ZIDE_DEFAULT_LAYOUT:-"ide_compact"}} 
+layout=${2:-${ZIDE_DEFAULT_LAYOUT:-"compact"}} 
 
 # Figure out where zide is installed based on where the script lives
 if command -v readlink >/dev/null 2>&1; then

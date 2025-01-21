@@ -1,0 +1,41 @@
+layout {
+    tab hide_floating_panes=true {
+        floating_panes {
+            lazygit
+        }
+        pane split_direction="vertical" {
+            filepicker size=40
+            editor
+        }
+        compact_bar size=1
+    }
+
+    // TEMPLATES
+    pane_template name="lazygit" start_suspended=true close_on_exit=true {
+        command "lazygit"
+        x "10%"
+        y "5%"
+        width "80%"
+        height "80%"
+    }
+
+    pane_template name="filepicker" {
+        command "zide-pick"
+    }
+
+    pane_template name="editor" {
+        command "$EDITOR"
+    }
+
+    pane_template name="compact_bar" {
+        borderless true
+        plugin location="compact-bar"
+    }
+
+    new_tab_template {
+        pane
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+    }
+}

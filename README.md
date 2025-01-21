@@ -41,7 +41,7 @@ You can provide the `zide` command a different directory, and choose from one of
 
 ```sh
 # Start zide layout in a different directory and use the alternate layout
-$ zide ~/development/zide ide
+$ zide ~/development/zide wide
 ```
 
 Passing in a working directory will ensure that the filepicker, your editor, and any future panes are all working in the same directory. By default, it'll use the current working directory from which you're calling the command.

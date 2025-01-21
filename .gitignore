@@ -2,5 +2,5 @@
 # Ignore any custom layouts
 layouts/*.kdl
 # Track the built-in layouts in git
-!layouts/ide.kdl
-!layouts/ide_compact.kdl
+!layouts/compact.kdl
+!layouts/wide.kdl
