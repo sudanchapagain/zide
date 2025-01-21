@@ -22,7 +22,10 @@ I recently started using [Helix](https://helix-editor.com) as my editor of choic
 Download the project files and place them somewhere convenient on your system (such as `$HOME/.config/zide`). Then add the `bin/` directory to your `PATH`.
 
 ```sh
-export PATH="$PATH:$HOME/.config/zide/bin"
+$ git clone git@github.com:josephschmitt/zide.git $HOME/.config/zide
+```
+```sh
+export PATH="$PATH:$HOME/.config/zide/bin" # Add this to your shell profile
 ```
 
 ### Dependencies
@@ -52,11 +55,11 @@ The alternate layout is similar to the default one, but with a 3rd, 100-column w
 
 ## Configuration
 
-For basic help, you can pass the `--help` or `-h` flag any of the commands to get details on how to configure them.
+For basic help, you can pass the `--help` or `-h` flag to any of the commands to get details on how to configure them.
 
 ### Layouts
 
-If you want to make your own layouts, duplicate the built-in layouts in the `layouts/` directory and give them custom names. You'll be able to refer to those names when providing a custom layout to the `zide` command.
+If you want to make your own layouts, duplicate any of the built-in layouts in the `layouts/` directory and give them custom names. You'll be able to refer to those names when providing a custom layout to the `zide` command.
 
 In the layouts you can tweak things such as how wide you want your picker pane to be vs the editor, and any other layout tweaks you want to make. The one absolute requirement is that **your editor pane must be next to the picker pane**. There's no way to uniquely identify the different panes in `zellij`, therefore these scripts depend on calling `zellij action focus-next-pane` to focus your editor from your picker.
 
@@ -82,10 +85,10 @@ In for e.g. `~/.config/yazi-custom/yazi.toml`
 [manager]
 ratio = [0, 1, 0]
 show-hidden = true
+# Some more config options here
 ```
 
 ```sh
-# Assuming you have a custom config at ~/.config/yazi-single/yazi.toml
 export ZIDE_USE_YAZI_CONFIG="$HOME/.config/yazi-custom"
 ```
 
@@ -106,8 +109,15 @@ This makes sure that `nnn` will use zide to open your files when you select them
 
 When using zide with `lf`, you'll probably want to start it in single column mode. Similarly to Yazi above, zide comes with a simple config file it points to when using `lf` that turns this on by default called `ZIDE_USE_LF_CONFIG`. Similarly, set it to `false` to disable it, or give it a value to point it to a config outside of this project.
 
+In ~/.config/custom-configs/lf/lfrc
+
+```
+set preview false
+set ratios 1
+```
+
 ```sh
-export ZIDE_USE_LF_CONFIG="path/to/custom/config"
+export ZIDE_USE_LF_CONFIG="~/.config/custom-configs"
 ```
 
 ## How it works
