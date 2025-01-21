@@ -8,19 +8,21 @@ Optional Parameters:
 	                  picker into.
 
 Options:
-  -h, --help        Show this help message and exit.
-  -c, --command     Command used to open files in \`$EDITOR\`
-  -p, --picker      File picker to use. Available file pickers are listed in
-                    bin/lib. Setting this will override the ZIDE_FILE_PICKER
-                    env var.
+  -h, --help            Show this help message and exit.
+  -c, --command         Command used to open files in \`$EDITOR\`
+  -p, --picker          File picker to use. Available file pickers are listed in
+                        bin/lib. Setting this will override the ZIDE_FILE_PICKER
+                        env var.
 
 Environment Variables:
-  ZIDE_FILE_PICKER  File picker to use, needs to be declared in your \$PATH.
+  ZIDE_FILE_PICKER      File picker to use, needs to be declared in your \$PATH.
+  ZIDE_USE_YAZI_CONFIG  If true, will use the yazi.toml file in this project
+                        when using yazi as your picker. The config file in this
+                        project automatically puts yazi into a single-pane mode.
 
 Description:
-  Wrapper around Yazi that handles sending picked files to \`$EDITOR\` pane and
-  then re-opening Yazi. If a directory was the picked path, Yazi will re-open in
-  that directory as its new working dir.
+  Wrapper around file pickers that sets \`zide-edit\` as the \`$EDITOR\` so that
+  files open in the editor pane.
 EOF
 
 # Function to display the help text
@@ -80,4 +82,9 @@ if ! command -v ${picker} &> /dev/null; then
   exit 1
 fi
 
-env EDITOR="zide-edit" ${picker} ${working_dir}
+envs="EDITOR='zide-edit'"
+if [[ "${picker}" == "yazi" && "${ZIDE_USE_YAZI_CONFIG}" != "false" ]]; then
+  envs="${envs} YAZI_CONFIG_HOME=${ZIDE_DIR}/yazi"
+fi
+
+env -S "${envs}" ${picker} ${working_dir}
