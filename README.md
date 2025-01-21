@@ -100,6 +100,14 @@ export NNN_OPENER="zide-edit"
 
 This makes sure that `nnn` will use zide to open your files when you select them.
 
+#### lf
+
+When using zide with `lf`, you'll probably want to start it in single column mode. Similarly to Yazi above, zide comes with a simple config file it points to when using `lf` that turns this on by default called `ZIDE_USE_LF_CONFIG`. Similarly, set it to `false` to disable it, or give it a value to point it to a config outside of this project.
+
+```sh
+export ZIDE_USE_LF_CONFIG="path/to/custom/config"
+```
+
 ## How it works
 
 This project consists of 4 parts:
