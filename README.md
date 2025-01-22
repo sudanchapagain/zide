@@ -66,8 +66,11 @@ The `wide` layout is similar to the default one, but with a 3rd, 100-column wide
 
 #### `stacked`
 The `stacked` layout uses Zellij's pane stacking feature to create 3 horizontal panes stacked on top of each other, but only 1 pane is visible at any one time. Switching panes will then make that pane visible, and collapse the rest.
-<p align="center"><img src="https://github.com/user-attachments/assets/554cd950-55b4-49be-ba55-9fe99a181cc4" width=85% /></p>
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7fe1941a-12bd-4cf1-9bf8-86266784d55d" width=30% />
+  <img src="https://github.com/user-attachments/assets/554cd950-55b4-49be-ba55-9fe99a181cc4" width=30% />
+  <img src="https://github.com/user-attachments/assets/49dd43b1-5655-472e-b989-dd4a101bf81e" width=30% />
+</p>
 ---
 
 Each default layout also includes a `_lazygit` variant that includes a pane running `lazygit` for easier git access. Any additional layouts you add or configure in the zide `layouts/` directory will be available to use from the `zide` command, and will be git ignored.
