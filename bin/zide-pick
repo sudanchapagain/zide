@@ -88,7 +88,8 @@ fi
 
 envs="EDITOR='zide-edit'"
 if [[ "${picker}" == "yazi" && "${ZIDE_USE_YAZI_CONFIG}" != "false" ]]; then
-  yaziConfigDir="${ZIDE_USE_YAZI_CONFIG:-${ZIDE_DIR}/yazi}"
+  yaziDefaultConfigs=("${ZIDE_DIR}/yazi/three-column:stacked" "${ZIDE_DIR}/yazi/single-column")
+  yaziConfigDir="${ZIDE_USE_YAZI_CONFIG:-${yaziDefaultConfigs[*]}}"
   
   foundConfig=$(findLayoutConfig "${yaziConfigDir}" ${ZIDE_CURRENT_LAYOUT})
   if [ -n "${foundConfig}" ]; then
@@ -97,9 +98,11 @@ if [[ "${picker}" == "yazi" && "${ZIDE_USE_YAZI_CONFIG}" != "false" ]]; then
 fi
 
 if [[ "${picker}" == "lf" && "${ZIDE_USE_LF_CONFIG}" != "false" ]]; then
-  lfConfigDir="${ZIDE_USE_LF_CONFIG:-${ZIDE_DIR}}"
+  lfDefaultConfigs=("${ZIDE_DIR}/lf/three-column:stacked" "${ZIDE_DIR}/lf/single-column")
+  lfConfigDir="${ZIDE_USE_LF_CONFIG:-${lfDefaultConfigs[*]}}"
 
-  foundConfig="$(findLayoutConfig ${lfConfigDir} ${ZIDE_CURRENT_LAYOUT})"
+  foundConfig=$(findLayoutConfig "${lfConfigDir}" ${ZIDE_CURRENT_LAYOUT})
+  echo "FOUND: $foundConfig"
   if [ -n "${foundConfig}" ]; then
     envs="${envs} LF_CONFIG_HOME=${foundConfig}"
   fi
