@@ -2,7 +2,7 @@
 
 Zide is a combination of [Zellij](https://zellij.dev) layouts and convenience `bash` scripts that creates an IDE-like layout environment. It mainly consists of a file picker (such as `yazi`) in one pane, and your editor of choice in the main pane. You can browse the file tree in your picker pane, and then any files that are selected or opened do so in the editor's pane.
 
-![zide screenshot](https://github.com/user-attachments/assets/6b26f0af-1a3e-486a-a395-e6f4cc6c355b)
+![zide screenshot](https://github.com/user-attachments/assets/44943c44-0f07-492e-b564-ce5c10f0e9bc)
 
 The project was inspired by the [`yazelix`](https://github.com/luccahuguet/yazelix) project, but simplifies it down to work in most shells (instead of requiring `nushell`), more editors (vs just Helix), and essentailly any file picker, with less required configuration.
 
