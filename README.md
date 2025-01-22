@@ -59,10 +59,8 @@ When executed, the `zide` command will do one of two things:
 #### `compact` 
 By default starting `zide` will use a layout consisting of 2 vertical split of panes with a filepicker on the left occupying a small slice of it, and your editor on the right occupying the rest, with your current working directory set as the directory in both your editor and the filepicker.
 <p align="center">
-  <img alt="Compact layout" src="https://github.com/user-attachments/assets/62f09161-eb0a-4584-a174-8a2f3ad640c3" width=30% />
-  <img alt="Compact layout with an extra shell pane splitting the editor pane" src="https://github.com/user-attachments/assets/f8584284-99ca-407d-a808-54e82f6a948c" width=30% />
-  <img alt="Compact layout with optional lazygit floating pane" src="https://github.com/user-attachments/assets/e9ba8637-986c-48dc-9f19-0117ea3086ed" width=30% />
-
+  <img alt="Compact layout" src="https://github.com/user-attachments/assets/62f09161-eb0a-4584-a174-8a2f3ad640c3" width=45% />
+  <img alt="Compact layout with an extra shell pane splitting the editor pane" src="https://github.com/user-attachments/assets/f8584284-99ca-407d-a808-54e82f6a948c" width=45% />
 </p>
 
 #### `wide`
@@ -72,7 +70,7 @@ The `wide` layout is similar to the default one, but with a 3rd, 100-column wide
 </p>
 
 #### `tall`
-The `tall` layout takes advantage of tall screens or windows and layouts the panes out horizontally, with the picker occupying the top of the layout in a narrow view, and the editor below. Due to zide's new-found config switching, if you use `yazi` or `lf` as your file picker, this layout will automatically switch to a 3-pane view.
+The `tall` layout takes advantage of tall screens or windows and lays the panes out horizontally, with the picker occupying the top of the layout in a narrow view, and the editor below. Due to zide's new-found config switching, if you use `yazi` or `lf` as your file picker, this layout will automatically switch to a 3-pane view.
 
 <p align="center">
   <img alt="Tall layout" src="https://github.com/user-attachments/assets/9070f41b-a283-4530-a091-12b9ed255d52" width="85%" />
@@ -88,7 +86,13 @@ The `stacked` layout uses Zellij's pane stacking feature to create 3 horizontal 
 
 ---
 
-Each default layout also includes a `_lazygit` variant that includes a pane running `lazygit` for easier git access. Any additional layouts you add or configure in the zide `layouts/` directory will be available to use from the `zide` command, and will be git ignored.
+Each default layout also includes a `_lazygit` variant that includes a floating pane running `lazygit` for easier git access.
+
+<p align="center">
+  <img alt="Compact layout with optional lazygit floating pane" src="https://github.com/user-attachments/assets/e9ba8637-986c-48dc-9f19-0117ea3086ed" width=85% />
+</p>
+
+ Any additional layouts you add or configure in the zide `layouts/` directory will be available to use from the `zide` command, and will be git ignored.
 
 ## Configuration
 
