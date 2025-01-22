@@ -71,6 +71,13 @@ The `wide` layout is similar to the default one, but with a 3rd, 100-column wide
   <img alt="Wide layout showing 3 vertical columns" src="https://github.com/user-attachments/assets/4c4c3881-6855-4b66-81c0-f5b18d8869a5" width=85% />
 </p>
 
+#### `tall`
+The `tall` layout takes advantage of tall screens or windows and layouts the panes out horizontally, with the picker occupying the top of the layout in a narrow view, and the editor below. Due to zide's new-found config switching, if you use `yazi` or `lf` as your file picker, this layout will automatically switch to a 3-pane view.
+
+<p align="center">
+  <img alt="Tall layout" src="https://github.com/user-attachments/assets/9070f41b-a283-4530-a091-12b9ed255d52" width="85%" />
+</p>
+
 #### `stacked`
 The `stacked` layout uses Zellij's pane stacking feature to create 3 horizontal panes stacked on top of each other, but only 1 pane is visible at any one time. Switching panes will then make that pane visible, and collapse the rest.
 <p align="center">
@@ -78,6 +85,7 @@ The `stacked` layout uses Zellij's pane stacking feature to create 3 horizontal 
   <img alt="Stacked layout with the editor pane selected" src="https://github.com/user-attachments/assets/554cd950-55b4-49be-ba55-9fe99a181cc4" width=30% />
   <img alt="Stacked layout with the shell pane selected" src="https://github.com/user-attachments/assets/49dd43b1-5655-472e-b989-dd4a101bf81e" width=30% />
 </p>
+
 ---
 
 Each default layout also includes a `_lazygit` variant that includes a pane running `lazygit` for easier git access. Any additional layouts you add or configure in the zide `layouts/` directory will be available to use from the `zide` command, and will be git ignored.
