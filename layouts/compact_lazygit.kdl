@@ -10,6 +10,33 @@ layout {
         compact_bar size=1
     }
 
+    swap_tiled_layout {
+        tab exact_panes=4 {
+            pane split_direction="vertical" {
+                filepicker size=40
+                pane split_direction="horizontal" {
+                    editor size="75%"
+                    pane
+                }
+            }
+            compact_bar size=1
+        }
+
+        tab min_panes=5 {
+            pane split_direction="vertical" {
+                filepicker size=40
+                pane split_direction="horizontal" {
+                    editor size="50%"
+                    pane split_direction="vertical" {
+                        pane
+                        pane
+                    }
+                }
+            }
+            compact_bar size=1
+        }
+    }
+
     // TEMPLATES
     pane_template name="lazygit" start_suspended=true {
         command "lazygit"
