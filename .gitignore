@@ -10,3 +10,4 @@ layouts/*.kdl
 !layouts/tall_lazygit.kdl
 !layouts/wide.kdl
 !layouts/wide_lazygit.kdl
+tmp/

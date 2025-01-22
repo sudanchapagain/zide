@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source "${ZIDE_DIR}/bin/lib/findLayoutConfig.sh"
+source "${ZIDE_DIR}/tmp/env"
 
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <working_dir>

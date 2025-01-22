@@ -87,6 +87,11 @@ export ZIDE_DIR=$(dirname "$script_dir")
 export ZIDE_FILE_PICKER=${picker:-${ZIDE_FILE_PICKER}}
 export ZIDE_CURRENT_LAYOUT="${layout}"
 
+# Dump env vars to disk so they can be restored across tabs and panes
+tmpDir="${ZIDE_DIR}/tmp"
+mkdir -p "${tmpDir}"
+printenv | grep ZIDE_ | sed 's/^/export /; s/=/="/; s/$/"/' > "${tmpDir}/env"
+
 layout_path="$ZIDE_DIR/layouts/$layout"
 if [ -n "$ZELLIJ" ]; then
   zellij action new-tab --cwd $cwd --layout "$layout_path"
