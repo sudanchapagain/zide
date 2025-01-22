@@ -55,9 +55,20 @@ When executed, the `zide` command will do one of two things:
 
 ### Available Layouts
 
-1. `compact` By default starting `zide` will use a layout consisting of 2 vertical split of panes with a filepicker on the left occupying a small slice of it, and your editor on the right occupying the rest, with your current working directory set as the directory in both your editor and the filepicker.
-1. `wide` The `wide` layout is similar to the default one, but with a 3rd, 100-column wide pane to the right. The two layouts also differ slightly in how the swap layouts work.
-1. `stacked` The `stacked` layout uses Zellij's pane stacking feature to create 3 horizontal panes stacked on top of each other, but only 1 pane is visible at any one time. Switching panes will then make that pane visible, and collapse the rest.
+#### `compact` 
+By default starting `zide` will use a layout consisting of 2 vertical split of panes with a filepicker on the left occupying a small slice of it, and your editor on the right occupying the rest, with your current working directory set as the directory in both your editor and the filepicker.
+<p align="center"><img src="https://github.com/user-attachments/assets/62f09161-eb0a-4584-a174-8a2f3ad640c3" width=45% />&nbsp;<img src="https://github.com/user-attachments/assets/f8584284-99ca-407d-a808-54e82f6a948c" width=45% /></p>
+
+#### `wide`
+The `wide` layout is similar to the default one, but with a 3rd, 100-column wide pane to the right. The two layouts also differ slightly in how the swap layouts work.
+<p align="center"><img src="https://github.com/user-attachments/assets/4c4c3881-6855-4b66-81c0-f5b18d8869a5" width=85% /></p>
+
+
+#### `stacked`
+The `stacked` layout uses Zellij's pane stacking feature to create 3 horizontal panes stacked on top of each other, but only 1 pane is visible at any one time. Switching panes will then make that pane visible, and collapse the rest.
+<p align="center"><img src="https://github.com/user-attachments/assets/554cd950-55b4-49be-ba55-9fe99a181cc4" width=85% /></p>
+
+---
 
 Each default layout also includes a `_lazygit` variant that includes a pane running `lazygit` for easier git access. Any additional layouts you add or configure in the zide `layouts/` directory will be available to use from the `zide` command, and will be git ignored.
 
