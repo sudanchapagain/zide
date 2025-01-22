@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "${ZIDE_DIR}/bin/lib/findLayoutConfig.sh"
+
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <working_dir>
 
@@ -87,12 +89,20 @@ fi
 envs="EDITOR='zide-edit'"
 if [[ "${picker}" == "yazi" && "${ZIDE_USE_YAZI_CONFIG}" != "false" ]]; then
   yaziConfigDir="${ZIDE_USE_YAZI_CONFIG:-${ZIDE_DIR}/yazi}"
-  envs="${envs} YAZI_CONFIG_HOME=${yaziConfigDir}"
+  
+  foundConfig=$(findLayoutConfig "${yaziConfigDir}" ${ZIDE_CURRENT_LAYOUT})
+  if [ -n "${foundConfig}" ]; then
+    envs="${envs} YAZI_CONFIG_HOME=${foundConfig}"
+  fi
 fi
 
 if [[ "${picker}" == "lf" && "${ZIDE_USE_LF_CONFIG}" != "false" ]]; then
   lfConfigDir="${ZIDE_USE_LF_CONFIG:-${ZIDE_DIR}}"
-  envs="${envs} LF_CONFIG_HOME=${lfConfigDir}"
+
+  foundConfig="$(findLayoutConfig ${lfConfigDir} ${ZIDE_CURRENT_LAYOUT})"
+  if [ -n "${foundConfig}" ]; then
+    envs="${envs} LF_CONFIG_HOME=${foundConfig}"
+  fi
 fi
 
 env -S "${envs}" ${picker} ${working_dir}

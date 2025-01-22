@@ -12,6 +12,7 @@ The project was inspired by the [`yazelix`](https://github.com/luccahuguet/yazel
 1. Browse for files in any visual file picker of your choosing, and open any selected files or directories in your editor pane
 1. Open multiple files at once in your editor if your picker supports a multiselect UI
 1. When opening a directory, set that directory as the working directory in your editor automatically 
+1. Load different config files for `yazi` or `lf` based on the loaded layout
 
 ## Why?
 
@@ -102,7 +103,12 @@ This project provides customization via the use of environment variables:
 1. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide `layouts/` directory. Feel free to add some layouts of your own here (they're gitignore'd).
 1. `ZIDE_FILE_PICKER`: The file picker command to use, defaults to `yazi` if none is set.
 1. `ZIDE_USE_YAZI_CONFIG`: When using `yazi` as a file picker, this will point it to the `yazi/yazi.toml` included with this project instead of using the default config. This config sets `yazi`'s ratio so that it operates in a single pane mode, which is more similar to how IDE's work. If you want to continue using your standard `yazi` config, set this env var to `false` (defaults to `true`). Alternatively, if you want to point to a different custom config directory, set this env var to that value.
-1. `ZIDE_USE_LF_CONFIG`: Same idea as `ZIDE_USE_YAZI_CONFIG`, but for `lf` as the picker. This project includes a basic custom config to run `lf` in single pane mode, which you can turn off by setting this env var to `false`. Or, if you want to point it to your own config to use with zide, set the env var to that value.
+   Additionally, you can conditionally load specific config files based on the layout you're in by appending `:<layout>` to your path and declaring multiple paths.
+   ```sh
+   export ZIDE_USE_YAZI_CONFIG="$HOME/.config/yazi-3p:stacked $HOME/.config/yazi-1p"
+   ```
+   In the above setup, it'll load the `yazi-3p` config directory when using the `stacked` layout to display a 3-pane layout in Yazi, otherwise load the standard 1-pane config. Make sure the "default" value that should match any layout is the last one in the list and has no `:<layout>` declared.
+1. `ZIDE_USE_LF_CONFIG`: Same idea as `ZIDE_USE_YAZI_CONFIG`, but for `lf` as the picker. This project includes a basic custom config to run `lf` in single pane mode, which you can turn off by setting this env var to `false`. Or, if you want to point it to your own config to use with zide, set the env var to that value. This env var also supports layout-based configs like Yazi does above.
 
 You probably don't ever need to customize these env vars unless you use an editor that is _very_ different from the standard modal editors, but I've included the documentation here for completeness:
 
