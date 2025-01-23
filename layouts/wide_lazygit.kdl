@@ -13,6 +13,23 @@ layout {
         compact_bar size=1
     }
 
+    swap_tiled_layout {
+        tab hide_floating_panes=true exact_panes=5 {
+            floating_panes {
+                lazygit
+            }
+            pane split_direction="vertical" {
+                filepicker size=40
+                editor
+                pane split_direction="horizontal" size=100 {
+                    pane
+                    pane
+                }
+            }
+            compact_bar size=1
+        }
+    }
+
     // TEMPLATES
     pane_template name="lazygit" start_suspended=true {
         command "lazygit"
