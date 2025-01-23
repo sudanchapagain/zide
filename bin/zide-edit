@@ -75,7 +75,13 @@ if [ ! -f "${path}" ] && [ ${#paths[@]} -eq 1 ]; then
 	zellij action write 27 # send <Escape> key to enter NORMAL mode
 	zellij action write-chars "${cmdModePrefix}${cdCommand} ${path}"
 	zellij action write 13 # send <Enter> key
-	sleep 0.25
+
+	# The longer the path string, the longer we need to wait so that zellij has time to write out
+	# the path before moving on. Through some trial and error, I found that dividing the length by
+	# 250 gives it sufficient time to get through it. Calculating this based on string length vs
+	# a static value makes sure we don't end up with a long wait time for short paths that don't
+	# need to wait as long.
+	sleep $(echo "${#path} / 250" | bc -l)
 fi
 
 # Open paths in the editor
