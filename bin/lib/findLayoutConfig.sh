@@ -20,7 +20,7 @@ findLayoutConfig() {
       local path="${item%%:*}"
       local layout="${item#*:}"
       # Check if layout matches current_layout
-      if [ "$layout" = "$current_layout" ]; then
+      if [[ "$current_layout" == "$layout"* ]]; then
         echo "$path"
         return 0
       fi
