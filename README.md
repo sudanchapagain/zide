@@ -34,7 +34,7 @@ export PATH="$PATH:$HOME/.config/zide/bin"
 
 ### Dependencies
 
-This project integrates [`zellij`](https://zellij.dev) with a file picker (assumes [`yazi`](https://yazi-rs.github.io) by default, but you can use any visual file picker you want), and so you'll need these installed for any of this to work. So far this project has been tested and works well with [`yazi`](https://yazi-rs.github.io/), [`nnn`](https://github.com/jarun/nnn), [`broot`](https://dystroy.org/broot/), and [`lf`](https://github.com/gokcehan/lf).
+This project integrates [`zellij`](https://zellij.dev) with a file picker (assumes [`yazi`](https://yazi-rs.github.io) by default), and so you'll need these installed for any of this to work. So far this project has been tested and works well with [`yazi`](https://yazi-rs.github.io/), [`nnn`](https://github.com/jarun/nnn), [`broot`](https://dystroy.org/broot/), [`lf`](https://github.com/gokcehan/lf), [`fff`](https://github.com/dylanaraps/fff), and [`felix`](https://github.com/kyoheiu/felix) but will probably work with just about any file manager you can imagine.
 
 There are some additional layouts included that use a [`lazygit`](https://github.com/jesseduffield/lazygit) floating pane for easy git integration, so you'll need `lazygit` installed if you plan on using that. Otherwise, the rest is written in plain `bash` so it should work on a wide variety of systems without further dependencies.
 
