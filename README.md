@@ -148,17 +148,6 @@ export ZIDE_USE_YAZI_CONFIG="$HOME/.config/yazi-custom"
 
 This will use that config when running in zide, but not when running `yazi` normally.
 
-#### [nnn](https://github.com/jarun/nnn)
-
-When using zide with `nnn` as your filepicker you'll have to make sure to set `NNN_OPENER` to point to `zide-edit`:
-
-```sh
-export ZIDE_FILE_PICKER="nnn -e"
-export NNN_OPENER="zide-edit"
-```
-
-This makes sure that `nnn` will use zide to open your files when you select them.
-
 #### [lf](https://github.com/gokcehan/lf)
 
 When using zide with `lf`, you'll probably want to start it in single column mode. Similarly to Yazi above, zide comes with a simple config file it points to when using `lf` that turns this on by default called `ZIDE_USE_LF_CONFIG`. Similarly, set it to `false` to disable it, or give it a value to point it to a config outside of this project.
