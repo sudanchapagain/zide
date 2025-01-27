@@ -138,11 +138,6 @@ This project provides customization via the use of environment variables:
    In the above setup, it'll load the `yazi-3p` config directory when using the `stacked` layout to display a 3-pane layout in Yazi, otherwise load the standard 1-pane config. Make sure the "default" value that should match any layout is the last one in the list and has no `:<layout>` declared.
 1. `ZIDE_USE_LF_CONFIG`: Same idea as `ZIDE_USE_YAZI_CONFIG`, but for `lf` as the picker. This project includes a basic custom config to run `lf` in single pane mode, which you can turn off by setting this env var to `false`. Or, if you want to point it to your own config to use with zide, set the env var to that value. This env var also supports layout-based configs like Yazi does above.
 
-You probably don't ever need to customize these env vars unless you use an editor that is _very_ different from the standard modal editors, but I've included the documentation here for completeness:
-
-1. `ZIDE_EDITOR_CMD_MODE`: Character to open command mode in editor. In editors such as Helix and NeoVim, this is the `:`.
-1. `ZIDE_EDITOR_CD_CMD`: Editor command to change the editor's current working directory. In Helix and NeoVim, this is `cd`.
-
 ### File Picker Configurations
 
 #### [Yazi](https://yazi-rs.github.io/)
