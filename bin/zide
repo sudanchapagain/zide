@@ -86,6 +86,7 @@ fi
 export ZIDE_DIR=$(dirname "$script_dir")
 export ZIDE_FILE_PICKER=${picker:-${ZIDE_FILE_PICKER}}
 export ZIDE_CURRENT_LAYOUT="${layout}"
+export ZIDE_ORIGINAL_EDITOR="${EDITOR}"
 
 # Dump env vars to disk so they can be restored across tabs and panes
 tmpDir="${ZIDE_DIR}/tmp"

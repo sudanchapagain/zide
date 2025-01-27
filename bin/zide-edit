@@ -65,7 +65,7 @@ zellij action focus-next-pane
 # editor. This ensures any other commands in our editor (such as :open, :mv, etc) have the correct
 # cwd set.
 if [ ! -f "${path}" ] && [ ${#paths[@]} -eq 1 ]; then
-  cdCommand="$(getEditorCommand $EDITOR cd)"
+  cdCommand="$(getEditorCommand $ZIDE_ORIGINAL_EDITOR cd)"
 	zellij action write 27 # send <Escape> key to enter NORMAL mode
 	zellij action write-chars ":${cdCommand} ${path}"
 	zellij action write 13 # send <Enter> key
@@ -81,6 +81,6 @@ fi
 # Open paths in the editor
 if [[ -n "${paths}" ]]; then
 	zellij action write 27 # send <Escape> key to enter NORMAL mode
-	zellij action write-chars ":$(getEditorCommand $EDITOR ${command}) ${paths}"
+	zellij action write-chars ":$(getEditorCommand $ZIDE_ORIGINAL_EDITOR ${command}) ${paths}"
 	zellij action write 13 # send <Enter> key
 fi
