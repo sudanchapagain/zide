@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source "${ZIDE_DIR}/tmp/env"
+source "${ZIDE_DIR}/bin/lib/getEditorCommand.sh"
 
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <path>...
@@ -10,13 +11,8 @@ Parameters:
 
 Options:
   -h, --help             Show this help message and exit.
-  -c, --command          Command used to open files in \`$EDITOR\`.
-                         (open/hsplit/vsplit in Helix, edit/split/vsplit NeoVim)
-
-Environment Variables:
-  ZIDE_EDITOR_CMD_MODE   Character that opens command mode in \`$EDITOR\`.
-  ZIDE_EDITOR_CD_CMD     Editor command to change \`$EDITOR\` current working
-                         directory.
+  -c, --command          How to open files in your \`$EDITOR\`.
+                         (One of open, hsplit, or vsplit).
 
 Description:
   Handles reading in a list of paths from stdin and uses Zellij's action
@@ -62,9 +58,6 @@ done
 paths=$@
 path=${paths[0]}
 
-cmdModePrefix=${ZIDE_EDITOR_CMD_MODE:-":"}
-cdCommand=${ZIDE_EDITOR_CD_CMD:-"cd"}
-
 # Focus editor pane, must be the next pane after yazi
 zellij action focus-next-pane
 
@@ -72,8 +65,9 @@ zellij action focus-next-pane
 # editor. This ensures any other commands in our editor (such as :open, :mv, etc) have the correct
 # cwd set.
 if [ ! -f "${path}" ] && [ ${#paths[@]} -eq 1 ]; then
+  cdCommand="$(getEditorCommand $EDITOR cd)"
 	zellij action write 27 # send <Escape> key to enter NORMAL mode
-	zellij action write-chars "${cmdModePrefix}${cdCommand} ${path}"
+	zellij action write-chars ":${cdCommand} ${path}"
 	zellij action write 13 # send <Enter> key
 
 	# The longer the path string, the longer we need to wait so that zellij has time to write out
@@ -87,6 +81,6 @@ fi
 # Open paths in the editor
 if [[ -n "${paths}" ]]; then
 	zellij action write 27 # send <Escape> key to enter NORMAL mode
-	zellij action write-chars "${cmdModePrefix}${command} ${paths}"
+	zellij action write-chars ":$(getEditorCommand $EDITOR ${command}) ${paths}"
 	zellij action write 13 # send <Enter> key
 fi

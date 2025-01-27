@@ -14,6 +14,22 @@ The project was inspired by the [`yazelix`](https://github.com/luccahuguet/yazel
 1. When opening a directory, set that directory as the working directory in your editor automatically 
 1. Load different config files for `yazi` or `lf` based on the loaded layout
 
+This project has been tested and works well with the following modal editors:
+- [Helix (`hx`)](https://helix-editor.com)
+- [Kakoune (`kak`)](https://kakoune.org)
+- [NeoVim (`nvim`)](https://neovim.io)
+- [Vim (`vim`)](https://www.vim.org)
+
+And the following file pickers:
+- [`yazi`](https://yazi-rs.github.io/)
+- [`nnn`](https://github.com/jarun/nnn)
+- [`broot`](https://dystroy.org/broot/)
+- [`lf`](https://github.com/gokcehan/lf)
+- [`fff`](https://github.com/dylanaraps/fff)
+- [`felix`](https://github.com/kyoheiu/felix)
+
+But will probably work with just about any TUI file manager.
+
 ## Why?
 
 I recently started using [Helix](https://helix-editor.com) as my editor of choice. I loved most everything about it, except that there was no tree-style file browser to open files. While the fuzzy finder is fantastic for quickly getting to files I know about, I often work in large monorepos where I don't know the directory or file naming structure in advance, and a visual filepicker is extremely useful. On top of that, [`yazi`](https://yazi-rs.github.io) is an incredibly powerful and useful tool for file management, and integrating it seemlessly with Helix was high on my list of priorities.
@@ -34,7 +50,7 @@ export PATH="$PATH:$HOME/.config/zide/bin"
 
 ### Dependencies
 
-This project integrates [`zellij`](https://zellij.dev) with a file picker (assumes [`yazi`](https://yazi-rs.github.io) by default), and so you'll need these installed for any of this to work. So far this project has been tested and works well with [`yazi`](https://yazi-rs.github.io/), [`nnn`](https://github.com/jarun/nnn), [`broot`](https://dystroy.org/broot/), [`lf`](https://github.com/gokcehan/lf), [`fff`](https://github.com/dylanaraps/fff), and [`felix`](https://github.com/kyoheiu/felix) but will probably work with just about any file manager you can imagine.
+This project integrates [`zellij`](https://zellij.dev) with a file picker of your choosing and an editor, and so you'll need these installed for any of this to work (if no specific file picker is set, it defaults to [`yazi`](https://yazi-rs.github.io)).
 
 There are some additional layouts included that use a [`lazygit`](https://github.com/jesseduffield/lazygit) floating pane for easy git integration, so you'll need `lazygit` installed if you plan on using that. Otherwise, the rest is written in plain `bash` so it should work on a wide variety of systems without further dependencies.
 
