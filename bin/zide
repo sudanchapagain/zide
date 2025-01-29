@@ -11,10 +11,15 @@ Options:
   -h, --help           Show this help message and exit.
   -p, --picker         File picker to use. Available file pickers are listed in
                        bin/lib. Equivalent to setting ZIDE_FILE_PICKER env var.
-  -t, --tab-name       Optional name to give the newly opened tab when launching
-                       from an existing session.
-  -T                   Name the newly opened tab after the directory opened when
-                       launching from an existing session.
+  -n, --name           Optional name to give the newly opened session or tab.
+                       Will name the session when starting Zide from outside an
+                       existing Zellij session, or name a tab if launching from
+                       inside an existing session.
+  -N                   Name newly opened session or tab using the cwd basename.
+                       Will name the session when starting Zide from outside an
+                       existing Zellij session, or name a tab if launching from
+                       inside an existing session. Ignored if the -n, --name
+                       flag is used.
 
 Environment Variables:
   ZIDE_DEFAULT_LAYOUT  Default zide layout to use from the \`layouts/\` directory.
@@ -45,7 +50,7 @@ show_help() {
 }
 
 # Parse command-line options
-tabName=""
+name=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -h|--help)
@@ -61,18 +66,18 @@ while [[ $# -gt 0 ]]; do
         exit 1
       fi
       ;;
-    -t|--tab-name)
+    -n|--name)
       if [[ -n "$2" && "$2" != -* ]]; then
-        tabName="$2"
+        name="$2"
         shift 2
       else
-        echo "Error: --tab-name requires a non-empty value."
+        echo "Error: --name requires a non-empty value."
         exit 1
       fi
       ;;
-    -T)
-      if [[ -z "${tabName}" ]]; then
-        tabName="__basename__"
+    -N)
+      if [[ -z "${name}" ]]; then
+        name="__basename__"
       fi
       shift
       ;;
@@ -94,9 +99,9 @@ done
 cwd=${1:-$(pwd)} 
 # Available layouts can be found in the zide layouts/ directory
 layout=${2:-${ZIDE_DEFAULT_LAYOUT:-"compact"}} 
-# Default tab name to the basename of the provided dir if -T flag set
-if [[ "${tabName}" == "__basename__" ]]; then
-  tabName="$(basename ${cwd})"
+# Default session/tab name to the basename of the provided dir if -N flag set
+if [[ "${name}" == "__basename__" ]]; then
+  name="$(basename ${cwd})"
 fi
 
 # Figure out where zide is installed based on where the script lives
@@ -120,14 +125,19 @@ printenv | grep ZIDE_ | sed 's/^/export /; s/=/="/; s/$/"/' > "${tmpDir}/env"
 layout_path="$ZIDE_DIR/layouts/$layout"
 if [ -n "$ZELLIJ" ]; then
   zellij action new-tab --cwd $cwd --layout "$layout_path"
-  if [[ -n "${tabName}" ]]; then
-    zellij action rename-tab "${tabName}"
+  if [[ -n "${name}" ]]; then
+    zellij action rename-tab "${name}"
   fi
 else
   # No way to specify the working dir to the zellij CLI, so we change the working dir before opening
   # zellij, and change it back once we exit
   pushd $cwd > /dev/null
-    zellij --layout "$layout_path"
+    cmd=("--new-session-with-layout" "${layout_path}")
+    if [[ -n "${name}" ]]; then
+      cmd+=("--session" "${name}")
+    fi
+
+    zellij "${cmd[@]}"
   popd > /dev/null
 fi
 

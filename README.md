@@ -71,9 +71,9 @@ When executed, the `zide` command will do one of two things:
 1. If you're in an existing `zellij` session, it'll create a new tab
 
 ### Options
-1. `--picker`: File picker to use. Available file pickers are listed in bin/lib. Equivalent to setting `ZIDE_FILE_PICKER` env var.
-1. `--tab-name`: Optional name to give the newly opened tab when launching from an existing session.
-1. `-T`: Name the newly opened tab after the directory being opened when launching from an existing session (ignored if `--tab-name` is set).
+1. `-p, --picker`: File picker to use. Available file pickers are listed in bin/lib. Equivalent to setting `ZIDE_FILE_PICKER` env var.
+1. `-n, --name`: Optional name to give the newly opened session (when starting a new session) or tab (when launching from an existing session).
+1. `-N`: Name the newly opened session or tab after the directory being opened (ignored if `--name` is set).
 
 ### Available Layouts
 
