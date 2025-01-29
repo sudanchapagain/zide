@@ -72,8 +72,8 @@ When executed, the `zide` command will do one of two things:
 
 ### Options
 1. `--picker`: File picker to use. Available file pickers are listed in bin/lib. Equivalent to setting `ZIDE_FILE_PICKER` env var.
-1. `--tab-name`: Optional name to give the newly opened tab.
-1. `-T`: Name the newly opened tab after the directory being opened (ignored if `--tab-name` is set).
+1. `--tab-name`: Optional name to give the newly opened tab when launching from an existing session.
+1. `-T`: Name the newly opened tab after the directory being opened when launching from an existing session (ignored if `--tab-name` is set).
 
 ### Available Layouts
 

@@ -11,8 +11,10 @@ Options:
   -h, --help           Show this help message and exit.
   -p, --picker         File picker to use. Available file pickers are listed in
                        bin/lib. Equivalent to setting ZIDE_FILE_PICKER env var.
-  -t, --tab-name       Optional name to give the newly opened tab.
-  -T                   Name the newly opened tab after the directory opened.
+  -t, --tab-name       Optional name to give the newly opened tab when launching
+                       from an existing session.
+  -T                   Name the newly opened tab after the directory opened when
+                       launching from an existing session.
 
 Environment Variables:
   ZIDE_DEFAULT_LAYOUT  Default zide layout to use from the \`layouts/\` directory.
@@ -118,6 +120,9 @@ printenv | grep ZIDE_ | sed 's/^/export /; s/=/="/; s/$/"/' > "${tmpDir}/env"
 layout_path="$ZIDE_DIR/layouts/$layout"
 if [ -n "$ZELLIJ" ]; then
   zellij action new-tab --cwd $cwd --layout "$layout_path"
+  if [[ -n "${tabName}" ]]; then
+    zellij action rename-tab "${tabName}"
+  fi
 else
   # No way to specify the working dir to the zellij CLI, so we change the working dir before opening
   # zellij, and change it back once we exit
@@ -126,6 +131,3 @@ else
   popd > /dev/null
 fi
 
-if [[ -n "${tabName}" ]]; then
-  zellij action rename-tab "${tabName}"
-fi
