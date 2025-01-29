@@ -57,7 +57,7 @@ There are some additional layouts included that use a [`lazygit`](https://github
 ## Usage
 
 ```sh
-  $ zide <working_dir> <layout>
+  $ zide [OPTIONS] <working_dir> <layout>
 ```
 
 Run the `zide` command to start using Zellij with the zide-style IDE-like layout. It accepts two positional arguments, both of which are optional:
@@ -69,6 +69,11 @@ When executed, the `zide` command will do one of two things:
 
 1. If you're not currently in a `zellij` session, it'll start one
 1. If you're in an existing `zellij` session, it'll create a new tab
+
+### Options
+1. `--picker`: File picker to use. Available file pickers are listed in bin/lib. Equivalent to setting `ZIDE_FILE_PICKER` env var.
+1. `--tab-name`: Optional name to give the newly opened tab.
+1. `-T`: Name the newly opened tab after the directory being opened (ignored if `--tab-name` is set).
 
 ### Available Layouts
 

@@ -11,6 +11,8 @@ Options:
   -h, --help           Show this help message and exit.
   -p, --picker         File picker to use. Available file pickers are listed in
                        bin/lib. Equivalent to setting ZIDE_FILE_PICKER env var.
+  -t, --tab-name       Optional name to give the newly opened tab.
+  -T                   Name the newly opened tab after the directory opened.
 
 Environment Variables:
   ZIDE_DEFAULT_LAYOUT  Default zide layout to use from the \`layouts/\` directory.
@@ -41,6 +43,7 @@ show_help() {
 }
 
 # Parse command-line options
+tabName=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -h|--help)
@@ -55,6 +58,21 @@ while [[ $# -gt 0 ]]; do
         echo "Error: --picker requires a non-empty value."
         exit 1
       fi
+      ;;
+    -t|--tab-name)
+      if [[ -n "$2" && "$2" != -* ]]; then
+        tabName="$2"
+        shift 2
+      else
+        echo "Error: --tab-name requires a non-empty value."
+        exit 1
+      fi
+      ;;
+    -T)
+      if [[ -z "${tabName}" ]]; then
+        tabName="__basename__"
+      fi
+      shift
       ;;
     -*)
       echo "Unknown option: $1"
@@ -74,6 +92,10 @@ done
 cwd=${1:-$(pwd)} 
 # Available layouts can be found in the zide layouts/ directory
 layout=${2:-${ZIDE_DEFAULT_LAYOUT:-"compact"}} 
+# Default tab name to the basename of the provided dir if -T flag set
+if [[ "${tabName}" == "__basename__" ]]; then
+  tabName="$(basename ${cwd})"
+fi
 
 # Figure out where zide is installed based on where the script lives
 if command -v readlink >/dev/null 2>&1; then
@@ -102,4 +124,8 @@ else
   pushd $cwd > /dev/null
     zellij --layout "$layout_path"
   popd > /dev/null
+fi
+
+if [[ -n "${tabName}" ]]; then
+  zellij action rename-tab "${tabName}"
 fi
