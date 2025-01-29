@@ -36,7 +36,7 @@ I recently started using [Helix](https://helix-editor.com) as my editor of choic
 
 ## Installation
 
-[Download](https://github.com/josephschmitt/zide/releases/tag/latest) or clone the project files and place them somewhere convenient on your system (such as `$HOME/.config/zide`).
+[Download](https://github.com/josephschmitt/zide/releases/latest) or clone the project files and place them somewhere convenient on your system (such as `$HOME/.config/zide`).
 
 ```sh
 $ git clone git@github.com:josephschmitt/zide.git $HOME/.config/zide
