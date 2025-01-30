@@ -45,4 +45,9 @@ if [[ -n "${name}" ]]; then
   zellij action rename-tab "${name}"
 fi
 
+if [[ -n "${name}" ]]; then
+  # Do our best to name the session, but swallow any errors if it fails
+  zellij action rename-session "${name}" 2> /dev/null
+fi
+
 unset ZIDE_TAB_NAME
