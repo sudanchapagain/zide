@@ -32,19 +32,14 @@ Description:
     1. If you're not currently in a Zellij session, it'll start one
     2. If you're in an existing Zellij session, it'll create a new tab
 
-  By default, starting zide will use the compact layout, consisting of a
-  vertical split of panes with Yazi on the left occupying a small slice of it,
-  and \`$EDITOR\` on the right occupying the rest, with your current
-  working directory set as the directory in both \`$EDITOR\` and Yazi.
+  Zide will start with a default layout consisting of a vertical split of panes
+  with Yazi on the left occupying a small slice of it, and \`$EDITOR\` on the
+  right occupying the rest, with your current working directory set as the
+  directory in both \`$EDITOR\` and Yazi.
 
   Passing in a working directory will ensure that Yazi, your editor, and any
   future panes are all working in the same directory. By default, it'll use the
   current working directory from which you're calling the command.
-
-  The non-compact layout is similar to the compact one, but with a 3rd,
-  100-column wide pane to the right. The two layouts also differ slightly in how
-  the swap layouts work. Any additional layouts you add or configure in the zide
-  \`layouts/\` directory will be available to use from the zide command.
 EOF
 
 # Function to display the help text
@@ -105,7 +100,7 @@ fi
 # Working directory to open in, defaults to pwd
 cwd=${1:-$(pwd)} 
 # Available layouts can be found in the zide layouts/ directory
-layout=${2:-${ZIDE_DEFAULT_LAYOUT:-"compact"}} 
+layout=${2:-${ZIDE_DEFAULT_LAYOUT:-"default"}} 
 # Default session/tab name to the basename of the provided dir if -N flag set
 if [[ "${name}" == "__basename__" ]]; then
   name="$(basename ${cwd})"

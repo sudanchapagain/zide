@@ -4,22 +4,53 @@ layout {
             lazygit
             zide_rename
         }
-
         pane split_direction="vertical" {
             filepicker size=40
             editor
-            pane split_direction="horizontal" size=80 {
-              pane name="shell" {}
-            }
         }
         compact_bar size=1
     }
 
-    swap_tiled_layout {
-        tab hide_floating_panes=true exact_panes=5 {
-            floating_panes {
-                lazygit
+    swap_tiled_layout name="compact" {
+        tab exact_panes=4 {
+            pane split_direction="vertical" {
+                filepicker size=40
+                pane split_direction="horizontal" {
+                    editor size="75%"
+                    pane
+                }
             }
+            compact_bar size=1
+        }
+
+        tab min_panes=5 {
+            pane split_direction="vertical" {
+                filepicker size=40
+                pane split_direction="horizontal" {
+                    editor size="50%"
+                    pane split_direction="vertical" {
+                        pane
+                        pane
+                    }
+                }
+            }
+            compact_bar size=1
+        }
+    }
+
+    swap_tiled_layout name="wide" {
+        tab exact_panes=4 {
+            pane split_direction="vertical" {
+                filepicker size=40
+                editor
+                pane split_direction="horizontal" size=80 {
+                    pane
+                }
+            }
+            compact_bar size=1
+        }
+
+        tab min_panes=5 {
             pane split_direction="vertical" {
                 filepicker size=40
                 editor

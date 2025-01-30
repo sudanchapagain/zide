@@ -8,7 +8,7 @@ layout {
         pane split_direction="vertical" {
             filepicker size=40
             editor
-            pane size=100
+            pane size=80
         }
         compact_bar size=1
     }
@@ -18,7 +18,7 @@ layout {
             pane split_direction="vertical" {
                 filepicker size=40
                 editor
-                pane split_direction="horizontal" size=100 {
+                pane split_direction="horizontal" size=80 {
                     pane
                     pane
                 }

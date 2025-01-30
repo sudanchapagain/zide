@@ -63,7 +63,7 @@ There are some additional layouts included that use a [`lazygit`](https://github
 Run the `zide` command to start using Zellij with the zide-style IDE-like layout. It accepts two positional arguments, both of which are optional:
 
 1. `<working_dir>` Defaults to `.`, aka your current working directory. Whatever directory you pass as this argument will be the directory that the file picker, your editor, and any future panes will start out in. If you want to open the IDE to a specific project, I suggest passing in that project's directory as this argument (as opposed to navigating after startup) so the working directory is correctly set.
-1. `<layout>` Defaults to the `ZIDE_DEFAULT_LAYOUT` env var if set, otherwise to `compact`. You can see the list of available layouts in the [`layouts/`](./layouts) directory.
+1. `<layout>` Defaults to the `ZIDE_DEFAULT_LAYOUT` env var if set, otherwise to `default`. You can see the list of available layouts in the [`layouts/`](./layouts) directory.
 
 When executed, the `zide` command will do one of two things:
 
@@ -71,26 +71,38 @@ When executed, the `zide` command will do one of two things:
 1. If you're in an existing `zellij` session, it'll create a new tab
 
 ### Options
-1. `-p, --picker`: File picker to use. Available file pickers are listed in bin/lib. Equivalent to setting `ZIDE_FILE_PICKER` env var.
+
+1. `-p, --picker`: File picker to use. Available file pickers are listed in `bin/lib`. This is equivalent to setting `ZIDE_FILE_PICKER` env var.
 1. `-n, --name`: Optional name to give the newly opened session (when starting a new session) or tab (when launching from an existing session). If a session with this name already exists, it'll use a default random session name.
 1. `-N`: Name the newly opened session or tab after the directory being opened (ignored if `--name` is set). If a session with this name already exists, it'll use a default random session name.
 
 ### Available Layouts
 
-#### `compact` 
+The following layouts can all be found in the [`layouts/`](./layouts) directory as separate .kdl files. You can choose which layout to start with by either passing it to the `zide` command, or setting the `ZIDE_DEFAULT_LAYOUT` env var.
+
+### `default`
+
 By default starting `zide` will use a layout consisting of 2 vertical split of panes with a filepicker on the left occupying a small slice of it, and your editor on the right occupying the rest, with your current working directory set as the directory in both your editor and the filepicker.
+
+If you add one more pane, you'll have the choice between two swap layouts: "compact" and "wide". These map to the old (now deprecated) `compact` and `wide` layouts, but all contained in a single super layout using swap layouts.
+
+#### `compact` (Deprecated)
+
+This is the old default layout without the new swap layouts. Starts with the same layout as the new default, but without the option to swap to wide.
 <p align="center">
   <img alt="Compact layout" src="https://github.com/user-attachments/assets/62f09161-eb0a-4584-a174-8a2f3ad640c3" width=45% />
   <img alt="Compact layout with an extra shell pane splitting the editor pane" src="https://github.com/user-attachments/assets/f8584284-99ca-407d-a808-54e82f6a948c" width=45% />
 </p>
 
-#### `wide`
-The `wide` layout is similar to the default one, but with a 3rd, 100-column wide pane to the right. The two layouts also differ slightly in how the swap layouts work.
+#### `wide` (Deprecated)
+
+This is an old layout that has the same layout as the new "wide" swap layout. The `wide` layout has a 3rd, 80-column wide pane to the right.
 <p align="center">
   <img alt="Wide layout showing 3 vertical columns" src="https://github.com/user-attachments/assets/4c4c3881-6855-4b66-81c0-f5b18d8869a5" width=85% />
 </p>
 
 #### `tall`
+
 The `tall` layout takes advantage of tall screens or windows and lays the panes out horizontally, with the picker occupying the top of the layout in a narrow view, and the editor below. Due to zide's new-found config switching, if you use `yazi` or `lf` as your file picker, this layout will automatically switch to a 3-pane view.
 
 <p align="center">
@@ -98,6 +110,7 @@ The `tall` layout takes advantage of tall screens or windows and lays the panes 
 </p>
 
 #### `stacked`
+
 The `stacked` layout uses Zellij's pane stacking feature to create 3 horizontal panes stacked on top of each other, but only 1 pane is visible at any one time. Switching panes will then make that pane visible, and collapse the rest.
 <p align="center">
   <img alt="Stacked layout with the file picker pane selected" src="https://github.com/user-attachments/assets/7fe1941a-12bd-4cf1-9bf8-86266784d55d" width=30% />
