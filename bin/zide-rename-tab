@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "${ZIDE_DIR}/tmp/env"
+
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") <name>
 
@@ -42,3 +44,5 @@ fi
 if [[ -n "${name}" ]]; then
   zellij action rename-tab "${name}"
 fi
+
+unset ZIDE_TAB_NAME

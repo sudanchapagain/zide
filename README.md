@@ -135,6 +135,7 @@ This project provides customization via the use of environment variables:
 
 1. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide `layouts/` directory. Feel free to add some layouts of your own here (they're gitignore'd).
 1. `ZIDE_FILE_PICKER`: The file picker command to use, defaults to `yazi` if none is set.
+1. `ZIDE_ALWAYS_NAME`: When set to `true`, it'll always use the basename of the current working directory as the name of a new Zellij zide session or tab. Equivalent to always using the `-N` flag.
 1. `ZIDE_USE_YAZI_CONFIG`: When using `yazi` as a file picker, this will point it to the `yazi/yazi.toml` included with this project instead of using the default config. This config sets `yazi`'s ratio so that it operates in a single pane mode, which is more similar to how IDE's work. If you want to continue using your standard `yazi` config, set this env var to `false` (defaults to `true`). Alternatively, if you want to point to a different custom config directory, set this env var to that value.
    Additionally, you can conditionally load specific config files based on the layout you're in by appending `:<layout>` to your path and declaring multiple paths.
    ```sh

@@ -22,7 +22,10 @@ Options:
                        flag is used.
 
 Environment Variables:
-  ZIDE_DEFAULT_LAYOUT  Default zide layout to use from the \`layouts/\` directory.
+  ZIDE_DEFAULT_LAYOUT  Default zide layout to use from the \`layouts/\`
+                       directory.
+  ZIDE_ALWAYS_NAME     If true, will always use the basename of the target
+                       directory as the name of the tab/session when starting.
 
 Description:
   Start using Zellij in an IDE layout. The command will do one of two things:
@@ -93,6 +96,10 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [[ -z "${name}" && "${ZIDE_ALWAYS_NAME}" == "true" ]]; then
+  name="__basename__"
+fi
+
 # Optional params
 # 
 # Working directory to open in, defaults to pwd
@@ -138,4 +145,3 @@ else
     fi
   popd > /dev/null
 fi
-
