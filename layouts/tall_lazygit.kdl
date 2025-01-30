@@ -2,7 +2,7 @@ layout {
     tab hide_floating_panes=true {
         floating_panes {
             lazygit
-            zide_rename_tab
+            zide_rename
         }
         pane split_direction="horizontal" {
             filepicker size=15
@@ -32,7 +32,7 @@ layout {
         plugin location="compact-bar"
     }
 
-    pane_template name="zide_rename_tab" command="zide-rename-tab" close_on_exit=true
+    pane_template name="zide_rename" command="zide-rename" close_on_exit=true
 
     new_tab_template {
         pane

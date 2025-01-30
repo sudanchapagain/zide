@@ -202,9 +202,9 @@ It also has one more very important job, which is changing the `EDITOR` env var 
 
 The `zide-edit` command takes the place of your `EDITOR`. Instead of launching your `EDITOR`, it automates switching to your open editor pane, and sends it the correct `zellij` action commands so that it opens those files in the open editor pane.
 
-### `zide-rename-tab`
+### `zide-rename`
 
-The `zide-rename-tab` command is a convenience script for renaming zellij tabs. You can provide it a parameter of a tab name, and it'll use that to rename the currently focused tab. However, its main use case is in a layout as an auto-closing pane. Usage in this way will automatically name new tabs after whatever directory they're being opened to.
+The `zide-rename` command is a convenience script for renaming zellij tabs. You can provide it a parameter of a tab name, and it'll use that to rename the currently focused tab. However, its main use case is in a layout as an auto-closing pane. Usage in this way will automatically name new tabs after whatever directory they're being opened to.
 
 ---
 
