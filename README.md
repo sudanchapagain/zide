@@ -72,8 +72,8 @@ When executed, the `zide` command will do one of two things:
 
 ### Options
 1. `-p, --picker`: File picker to use. Available file pickers are listed in bin/lib. Equivalent to setting `ZIDE_FILE_PICKER` env var.
-1. `-n, --name`: Optional name to give the newly opened session (when starting a new session) or tab (when launching from an existing session).
-1. `-N`: Name the newly opened session or tab after the directory being opened (ignored if `--name` is set).
+1. `-n, --name`: Optional name to give the newly opened session (when starting a new session) or tab (when launching from an existing session). If a session with this name already exists, it'll use a default random session name.
+1. `-N`: Name the newly opened session or tab after the directory being opened (ignored if `--name` is set). If a session with this name already exists, it'll use a default random session name.
 
 ### Available Layouts
 
@@ -200,6 +200,10 @@ It also has one more very important job, which is changing the `EDITOR` env var 
 ### `zide-edit`
 
 The `zide-edit` command takes the place of your `EDITOR`. Instead of launching your `EDITOR`, it automates switching to your open editor pane, and sends it the correct `zellij` action commands so that it opens those files in the open editor pane.
+
+### `zide-rename-tab`
+
+The `zide-rename-tab` command is a convenience script for renaming zellij tabs. You can provide it a parameter of a tab name, and it'll use that to rename the currently focused tab. However, its main use case is in a layout as an auto-closing pane. Usage in this way will automatically name new tabs after whatever directory they're being opened to.
 
 ---
 

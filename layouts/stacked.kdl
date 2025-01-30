@@ -1,5 +1,9 @@
 layout {
     tab {
+        floating_panes {
+            zide_rename_tab
+        }
+
         pane stacked=true {
             filepicker
             editor expanded=true
@@ -20,6 +24,8 @@ layout {
         borderless true
         plugin location="compact-bar"
     }
+
+    pane_template name="zide_rename_tab" command="zide-rename-tab" close_on_exit=true
 
     new_tab_template {
         pane

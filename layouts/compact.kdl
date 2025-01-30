@@ -1,5 +1,9 @@
 layout {
     tab {
+        floating_panes {
+            zide_rename_tab
+        }
+
         pane split_direction="vertical" {
             filepicker size=40
             editor
@@ -47,6 +51,8 @@ layout {
         borderless true
         plugin location="compact-bar"
     }
+
+    pane_template name="zide_rename_tab" command="zide-rename-tab" close_on_exit=true
 
     new_tab_template {
         pane
