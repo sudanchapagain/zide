@@ -56,7 +56,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 paths=$@
-path=${paths[0]}
+path=${paths%% *}
 
 # Focus editor pane, must be the next pane after yazi
 zellij action focus-next-pane
