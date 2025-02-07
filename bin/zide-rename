@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${ZIDE_DIR}/tmp/env"
+source "${ZIDE_DIR}/tmp/${ZIDE_SESSION_NAME}_env"
 
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") <name>
