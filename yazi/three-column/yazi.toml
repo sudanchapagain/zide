@@ -5,6 +5,6 @@ ratio = [1, 1, 1]
 
 [opener]
 edit = [
-	{ run = '$EDITOR "$@"', block = true, for = "unix" },
-	{ run = "%EDITOR% %*",  block = true, for = "windows" },
+	{ run = '$EDITOR "$@"', block = false, for = "unix" },
+	{ run = "%EDITOR% %*",  block = false, for = "windows" },
 ]
