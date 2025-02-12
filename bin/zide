@@ -125,8 +125,9 @@ if [ -n "$ZELLIJ" ]; then
   zellij action new-tab --cwd $cwd --layout "$layout_path"
   zide-rename
 else
-  # No way to specify the working dir to the zellij CLI, so we change the working dir before opening
-  # zellij, and change it back once we exit
+  # There's a bug when using zellij options --default-cwd where the CWD isn't working for floating
+  # panes defined in the layout, so instead we'll use pushd to change the working dir before
+  # starting zellij, and change it back when we exit
   pushd $cwd > /dev/null
     zellij --layout "${layout_path}"
   popd > /dev/null
