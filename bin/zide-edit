@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source "${ZIDE_DIR}/bin/lib/getEditorCommand.sh"
+source "${ZIDE_DIR}/bin/lib/bashlog.sh"
 
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <path>...
@@ -63,7 +64,9 @@ done
 path=${escaped_paths[0]}
 
 # Focus editor pane, must be the next pane after yazi
-zellij action focus-next-pane
+# Capture any error output from executing pane focus and output to logs
+# Trying to debug an issue where sometimes this command does not work
+zellij action focus-next-pane && log debug "${prev_cmd}"
 
 # If we're trying to open a single path and it's a directory, change the working dir to it in our
 # editor. This ensures any other commands in our editor (such as :open, :mv, etc) have the correct
