@@ -4,7 +4,7 @@ layout {
             zide_rename
         }
         pane split_direction="vertical" {
-            filepicker size=40
+            filepicker size=40 name="picker"
             editor
         }
         compact_bar size=1
@@ -13,7 +13,7 @@ layout {
     swap_tiled_layout name="compact" {
         tab exact_panes=4 {
             pane split_direction="vertical" {
-                filepicker size=40
+                filepicker size=40 name="picker"
                 pane split_direction="horizontal" {
                     editor size="75%"
                     pane
@@ -24,7 +24,7 @@ layout {
 
         tab min_panes=5 {
             pane split_direction="vertical" {
-                filepicker size=40
+                filepicker size=40 name="picker"
                 pane split_direction="horizontal" {
                     editor size="50%"
                     pane split_direction="vertical" {
@@ -40,7 +40,7 @@ layout {
     swap_tiled_layout name="wide" {
         tab exact_panes=4 {
             pane split_direction="vertical" {
-                filepicker size=40
+                filepicker size=40 name="picker"
                 editor
                 pane split_direction="horizontal" size=80 {
                     pane
@@ -51,7 +51,7 @@ layout {
 
         tab min_panes=5 {
             pane split_direction="vertical" {
-                filepicker size=40
+                filepicker size=40 name="picker"
                 editor
                 pane split_direction="horizontal" size=80 {
                     pane

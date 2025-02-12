@@ -5,7 +5,7 @@ layout {
         }
 
         pane stacked=true {
-            filepicker
+            filepicker name="picker"
             editor expanded=true
         }
         compact_bar size=1
