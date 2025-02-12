@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-source "${TMPDIR}/zide/${ZIDE_SESSION_NAME}_env"
 source "${ZIDE_DIR}/bin/lib/findLayoutConfig.sh"
 
 read -r -d '' HELP_TEXT << EOF
