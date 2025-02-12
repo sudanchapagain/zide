@@ -54,7 +54,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-paths=$@
+paths=("$@")
 # Ensure paths with special chars (like spaces) are properly escaped
 escaped_paths=()
 for path in "${paths[@]}"; do
@@ -85,6 +85,6 @@ fi
 # Open paths in the editor
 if [[ -n "${escaped_paths}" ]]; then
 	zellij action write 27 # send <Escape> key to enter NORMAL mode
-	zellij action write-chars ":$(getEditorCommand $ZIDE_ORIGINAL_EDITOR ${command}) ${escaped_paths}"
+	zellij action write-chars ":$(getEditorCommand $ZIDE_ORIGINAL_EDITOR ${command}) ${escaped_paths[*]}"
 	zellij action write 13 # send <Enter> key
 fi
