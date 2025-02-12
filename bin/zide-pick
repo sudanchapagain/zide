@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-source "${ZIDE_DIR}/tmp/${ZIDE_SESSION_NAME}_env"
+source "${TMPDIR}/zide/${ZIDE_SESSION_NAME}_env"
 source "${ZIDE_DIR}/bin/lib/findLayoutConfig.sh"
 
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <working_dir>
 
 Optional Parameters:
-	<working_dir>     Optionally specify a working directory to open the file
-	                  picker into.
+	<working_dir>         Optionally specify a working directory to open the file
+	                      picker into.
 
 Options:
   -h, --help            Show this help message and exit.
