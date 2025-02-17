@@ -8,7 +8,6 @@ else
 fi
 
 export ZIDE_DIR=$(dirname "$script_dir")
-source "${ZIDE_DIR}/bin/lib/bashlog.sh"
 
 read -r -d '' HELP_TEXT << EOF
 Usage: $(basename "$0") [OPTIONS] <working_dir> <layout>
