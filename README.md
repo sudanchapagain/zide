@@ -132,6 +132,7 @@ You can make any type of layout you like and use any and all of Zellij's awesome
 This project provides customization via the use of environment variables:
 
 1. `ZIDE_DEFAULT_LAYOUT`: Default layout. Available layouts can be found in the zide `layouts/` directory. Feel free to add some layouts of your own here (they're gitignore'd).
+1. `ZIDE_LAYOUT_DIR`: Optionally point to a different directory that contains your layouts. Defaults to the `layouts/` directory in this project.
 1. `ZIDE_FILE_PICKER`: The file picker command to use, defaults to `yazi` if none is set.
 1. `ZIDE_ALWAYS_NAME`: When set to `true`, it'll always use the basename of the current working directory as the name of a new Zellij zide session or tab. Equivalent to always using the `-N` flag.
 1. `ZIDE_USE_YAZI_CONFIG` (defaults to `true`): When using `yazi` as a file picker, this will point it to the `yazi/yazi.toml` included with this project instead of using the default config. This config comes with the `auto-layout.yazi` plugin that will automatically set the number of columns based on the available width. If you want to continue using your standard `yazi` config, you have two options:
