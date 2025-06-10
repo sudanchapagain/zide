@@ -19,21 +19,6 @@ declare -A commands=(
   ["helix_open"]="open"
   ["helix_hsplit"]="hsplit"
   ["helix_vsplit"]="vsplit"
-
-  ["kak_cd"]="cd"
-  ["kak_open"]="edit"
-  ["kak_hsplit"]="edit"
-  ["kak_vsplit"]="edit"
-
-  ["nvim_cd"]="cd"
-  ["nvim_open"]="edit"
-  ["nvim_hsplit"]="split"
-  ["nvim_vsplit"]="vsplit"
-
-  ["vim_cd"]="cd"
-  ["vim_open"]="edit"
-  ["vim_hsplit"]="split"
-  ["vim_vsplit"]="vsplit"
 )
   
 getEditorCommand() {
